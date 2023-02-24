@@ -58,10 +58,24 @@ const notecard = (title, tags, content, project) => {
 
 // subjectStorage Module Pattern
 // will store subjects. Will add and delete subjects
+const subjectStorage = (() => {
+  const subjects = [];
 
-// subject factory function
-// returns a new subject
-// will have a function the returns all notecards classified under the subject
+  function addSubject(subject) {
+    subjects.push(subject);
+  }
+
+  function removeSubject(subject) {
+    const index = subjects.indexOf(subject);
+    subjects.splice(index, 1);
+  }
+
+  function getSubjects() {
+    return subjects;
+  }
+
+  return { addSubject, removeSubject, getSubjects };
+})();
 
 // tagStorage Module Pattern
 // will store tags. Will add and delete tags
