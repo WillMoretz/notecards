@@ -7,6 +7,7 @@
 .homepage {
   display: grid;
   grid-template-columns: 400px 1fr;
+  grid-template-rows: auto auto 1fr auto;
   grid-template-areas:
     "sidebar header"
     "sidebar nav"
@@ -24,6 +25,7 @@
 
 .homepage > .sidebar {
   grid-area: sidebar;
+  min-height: calc(100vh - 1rem - 3px);
 }
 
 .homepage > .body {
