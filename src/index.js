@@ -1,5 +1,3 @@
-// Pseudo code (some of these code blocks may later be moved to become their own modules)
-
 // notecardStorage Module Pattern
 // will store notecards in an array. Will add and delete notecards
 const notecardStorage = (() => {
@@ -22,8 +20,8 @@ const notecardStorage = (() => {
   }
 
   // returns an array of items that have a matching project
-  function getNotecardByProject(project) {
-    return notecards.filter((notecard) => notecard.project === project);
+  function getNotecardBySubject(subject) {
+    return notecards.filter((notecard) => notecard.subject === subject);
   }
 
   function getAllNotecards() {
@@ -34,14 +32,14 @@ const notecardStorage = (() => {
     addNotecard,
     removeNotecard,
     getNotecardByTags,
-    getNotecardByProject,
+    getNotecardBySubject,
     getAllNotecards,
   };
 })();
 
 // notecard factory function
 // returns a new notecard
-const notecard = (title, tags, content, project) => {
+const notecard = (title, tags, content, subject) => {
   function addTag(newTag) {
     tags.push(newTag);
   }
@@ -50,7 +48,7 @@ const notecard = (title, tags, content, project) => {
     tags.splice(index, 1);
   }
 
-  return { title, tags, content, project, addTag, removeTag };
+  return { title, tags, content, subject, addTag, removeTag };
 };
 
 // localstorage (probably should be its own module)
@@ -102,5 +100,23 @@ const tagStorage = (() => {
 
 // pageManager module pattern
 // will call DOM functions and functions defined above
+const pageManager = (() => {
+  function displaySubject(subject) {
+    const currentNotecards = notecardStorage.getNotecardBySubject(subject);
+    // Call DOM method to display currentNotecards
+  }
+
+  function displayTags(tags) {
+    const currentNotecards = notecardStorage.getNotecardByTags(tags);
+    // Call DOM method to display currentNotecards
+  }
+
+  function displayAll() {
+    const currentNotecards = notecardStorage.getAllNotecards();
+    // Call DOM method to display currentNoteCards
+  }
+
+  return { displaySubject, displayTags, displayAll };
+})();
 
 // Event Listeners that will interface with pageManager
