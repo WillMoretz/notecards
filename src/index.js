@@ -5,6 +5,17 @@
 
 // notecard factory function
 // returns a new notecard
+const notecard = (title, tags, content) => {
+  function addTag(newTag) {
+    tags.push(newTag);
+  }
+  function removeTag(tag) {
+    const index = tags.indexOf(tag);
+    tags.splice(index, 1);
+  }
+
+  return { title, tags, content, addTag, removeTag };
+};
 
 // localstorage (probably should be its own module)
 // function that stores a notecard object and a function that returns a notecard object out of storage
