@@ -4,6 +4,17 @@
   box-sizing: border-box;
 }
 
+:root {
+  --sidebar-background: #232946;
+  --header-background: #b8c1ec;
+  --body-background: #d4d8f0;
+
+  --light: #fffffe;
+  --dark: #232946;
+
+  --highlight: #eebbc3;
+}
+
 .homepage {
   display: grid;
   grid-template-columns: 400px 1fr;
@@ -13,6 +24,13 @@
     "sidebar nav"
     "sidebar body"
     "footer footer";
+}
+
+.homepage > .header,
+.homepage > .nav,
+.homepage > .footer {
+  background-color: var(--header-background, lightblue);
+  color: var(--dark, black);
 }
 
 .homepage > .header {
@@ -26,10 +44,18 @@
 .homepage > .sidebar {
   grid-area: sidebar;
   min-height: calc(100vh - 1rem - 3px);
+  background-color: var(--sidebar-background, darkblue);
+  color: var(--light, white);
 }
 
 .homepage > .body {
   grid-area: body;
+  background-color: var(--body-background, lightgrey);
+}
+
+.notecard {
+  background-color: var(--light, white);
+  color: var(--dark, black);
 }
 
 .homepage > .footer {
