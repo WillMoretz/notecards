@@ -14,13 +14,14 @@ const notecardStorage = (() => {
     notecards.splice(index, 1);
   }
 
+  // returns an array of items that have all matching tags
   function getNotecardByTags(tags) {
     return notecards.filter(
       (notecard) => notecard.tags.sort().join(",") === tags.sort().join(",")
     );
   }
 
-  // returns array items that have a matching project
+  // returns an array of items that have a matching project
   function getNotecardByProject(project) {
     return notecards.filter((notecard) => notecard.project === project);
   }
@@ -64,7 +65,24 @@ const notecard = (title, tags, content, project) => {
 
 // tagStorage Module Pattern
 // will store tags. Will add and delete tags
-// will have a function that returns all notecards that have the supplied tags
+const tagStorage = (() => {
+  const tags = [];
+
+  function addTag(tag) {
+    tags.push(tag);
+  }
+
+  function removeTag(tag) {
+    const index = tags.indexOf(tag);
+    tags.splice(index, 1);
+  }
+
+  function getTags() {
+    return tags;
+  }
+
+  return { addTag, removeTag, getTags };
+})();
 
 // DOMstuff: will be in its own module
 
