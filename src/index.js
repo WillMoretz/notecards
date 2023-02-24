@@ -2,10 +2,37 @@
 
 // notecardStorage Module Pattern
 // will store notecards in an array. Will add and delete notecards
+const notecardStorage = (() => {
+  const notecards = [];
+
+  function addNotecard(notecard) {
+    notecards.push(notecard);
+  }
+
+  function removeNotecard(notecard) {
+    const index = notecards.indexOf(notecard);
+    notecards.splice(index, 1);
+  }
+
+  function getNotecardByTags(tags) {
+    console.log(tags);
+  }
+
+  function getNotecardByProject(project) {
+    console.log(project);
+  }
+
+  return {
+    addNotecard,
+    removeNotecard,
+    getNotecardByTags,
+    getNotecardByProject,
+  };
+})();
 
 // notecard factory function
 // returns a new notecard
-const notecard = (title, tags, content) => {
+const notecard = (title, tags, content, project) => {
   function addTag(newTag) {
     tags.push(newTag);
   }
@@ -14,7 +41,7 @@ const notecard = (title, tags, content) => {
     tags.splice(index, 1);
   }
 
-  return { title, tags, content, addTag, removeTag };
+  return { title, tags, content, project, addTag, removeTag };
 };
 
 // localstorage (probably should be its own module)
