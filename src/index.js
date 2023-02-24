@@ -15,11 +15,18 @@ const notecardStorage = (() => {
   }
 
   function getNotecardByTags(tags) {
-    console.log(tags);
+    return notecards.filter(
+      (notecard) => notecard.tags.sort().join(",") === tags.sort().join(",")
+    );
   }
 
+  // returns array items that have a matching project
   function getNotecardByProject(project) {
-    console.log(project);
+    return notecards.filter((notecard) => notecard.project === project);
+  }
+
+  function getAllNotecards() {
+    return notecards;
   }
 
   return {
@@ -27,6 +34,7 @@ const notecardStorage = (() => {
     removeNotecard,
     getNotecardByTags,
     getNotecardByProject,
+    getAllNotecards,
   };
 })();
 
