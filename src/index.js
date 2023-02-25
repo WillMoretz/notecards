@@ -119,4 +119,17 @@ const pageManager = (() => {
   return { displaySubject, displayTags, displayAll };
 })();
 
+// rotate card on click (function will be moved later, just wanted to get it working rn)
+function rotateCard(cardClasslist) {
+  if (!cardClasslist.contains("rotated")) {
+    cardClasslist.remove("rotated");
+    cardClasslist.add("rotated");
+  } else {
+    cardClasslist.remove("rotated");
+  }
+}
+
+const CARD = document.querySelector(".notecard-inner");
+CARD.addEventListener("click", () => rotateCard(CARD.classList));
+
 // Event Listeners that will interface with pageManager
