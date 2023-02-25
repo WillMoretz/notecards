@@ -129,7 +129,9 @@ function rotateCard(cardClasslist) {
   }
 }
 
-const CARD = document.querySelector(".notecard-inner");
-CARD.addEventListener("click", () => rotateCard(CARD.classList));
+const CARDS = document.querySelectorAll(".notecard-inner");
+CARDS.forEach((CARD) => {
+  CARD.addEventListener("click", () => rotateCard(CARD.classList));
+});
 
 // Event Listeners that will interface with pageManager
