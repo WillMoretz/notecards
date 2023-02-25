@@ -119,19 +119,29 @@ const pageManager = (() => {
   return { displaySubject, displayTags, displayAll };
 })();
 
-// rotate card on click (function will be moved later, just wanted to get it working rn)
-function rotateCard(cardClasslist) {
-  if (!cardClasslist.contains("rotated")) {
-    cardClasslist.remove("rotated");
-    cardClasslist.add("rotated");
-  } else {
+const flipper = (() => {
+  function flipToFront(cardClasslist) {
     cardClasslist.remove("rotated");
   }
-}
 
-const CARDS = document.querySelectorAll(".notecard-inner");
-CARDS.forEach((CARD) => {
-  CARD.addEventListener("click", () => rotateCard(CARD.classList));
-});
+  function flipToBack(cardClasslist) {
+    cardClasslist.remove("rotated");
+    cardClasslist.add("rotated");
+  }
+
+  function flip(cardClasslist) {
+    if (!cardClasslist.contains("rotated")) {
+      flipToBack(cardClasslist);
+    } else {
+      flipToFront(cardClasslist);
+    }
+  }
+
+  return { flipToFront, flipToBack, flip };
+})();
 
 // Event Listeners that will interface with pageManager
+const CARDS = document.querySelectorAll(".notecard-inner");
+CARDS.forEach((CARD) => {
+  CARD.addEventListener("click", () => flipper.flip(CARD.classList));
+});
