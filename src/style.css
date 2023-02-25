@@ -26,13 +26,13 @@ button:hover {
   grid-template-rows: auto auto 1fr auto;
   grid-template-areas:
     "sidebar header"
-    "sidebar nav"
+    "sidebar tags"
     "sidebar body"
     "footer footer";
 }
 
 .homepage > .header,
-.homepage > .nav,
+.homepage > .tags,
 .homepage > .footer {
   background-color: var(--header-background, lightblue);
   color: var(--dark, black);
@@ -43,14 +43,34 @@ button:hover {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: 16px 0 16px 0;
-  font-size: 2rem;
-  font-weight: 700;
-  padding-left: 64px;
+  padding: 16px 64px 16px 0;
 }
 
-.homepage > .nav {
-  grid-area: nav;
+.homepage > .header > h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 auto 0 64px;
+}
+
+.nav > button,
+.homepage > .tags > button {
+  background-color: var(--body-background, lightgrey);
+  color: var(--dark, black);
+  font-weight: 700;
+  border: 2px solid black;
+  border-radius: 20px;
+}
+
+.nav > button {
+  padding: 8px 24px 8px 24px;
+}
+
+.nav > button:hover {
+  box-shadow: 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+.homepage > .tags {
+  grid-area: tags;
   padding: 4px 0 4px 4px;
   display: flex;
   justify-content: center;
@@ -58,15 +78,11 @@ button:hover {
   gap: 8px;
 }
 
-.homepage > .nav > button {
+.homepage > .tags > button {
   padding: 6px 18px 6px 18px;
-  background-color: var(--body-background, lightgrey);
-  color: var(--dark, black);
-  font-weight: 700;
-  border: 2px solid black;
 }
 
-.homepage > .nav > button:hover {
+.homepage > .tags > button:hover {
   box-shadow: 2px 2px rgba(0, 0, 0, 0.1);
 }
 
