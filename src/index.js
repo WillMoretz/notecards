@@ -114,7 +114,24 @@ const flipper = (() => {
     }
   }
 
-  return { flipToFront, flipToBack, flip };
+  function flipAll(notecards) {
+    let allFront = true;
+
+    for (const card of notecards) {
+      if (card.classList.contains("rotated")) {
+        allFront = false;
+        break;
+      }
+    }
+
+    if (allFront) {
+      for (const card of notecards) flipToBack(card.classList);
+    } else {
+      for (const card of notecards) flipToFront(card.classList);
+    }
+  }
+
+  return { flip, flipAll };
 })();
 
 const homepage = (() => {
@@ -133,21 +150,7 @@ const homepage = (() => {
     flipAllButton.textContent = "Flip All";
 
     flipAllButton.addEventListener("click", () => {
-      const notecards = document.querySelectorAll(".notecard-inner");
-      let allFront = true;
-
-      for (const card of notecards) {
-        if (card.classList.contains("rotated")) {
-          allFront = false;
-          break;
-        }
-      }
-
-      if (allFront) {
-        for (const card of notecards) flipper.flipToBack(card.classList);
-      } else {
-        for (const card of notecards) flipper.flipToFront(card.classList);
-      }
+      flipper.flipAll(document.querySelectorAll(".notecard-inner"));
     });
 
     nav.appendChild(flipAllButton);
@@ -327,9 +330,6 @@ const pageManager = (() => {
   }
 
   return {
-    displaySubjectCards,
-    displayTagsCards,
-    displayAllCards,
     InitHomepage,
   };
 })();
