@@ -1,4 +1,4 @@
-/* eslint-disable no-restricted-syntax */
+/* eslint-disable prefer-destructuring */
 const flipper = (() => {
   function flipToFront(cardClasslist) {
     cardClasslist.remove("rotated");
@@ -21,7 +21,7 @@ const flipper = (() => {
 })();
 
 const homepage = (() => {
-  function generateHeader() {
+  function generateHeader(eventFunction) {
     const header = document.createElement("div");
     header.classList.add("header");
 
@@ -35,7 +35,7 @@ const homepage = (() => {
     const flipAllButton = document.createElement("button");
     flipAllButton.textContent = "Flip All";
     flipAllButton.addEventListener("click", () => {
-      console.log("flip all button fired");
+      eventFunction();
     });
     nav.appendChild(flipAllButton);
 
@@ -43,14 +43,14 @@ const homepage = (() => {
     return header;
   }
 
-  function generateTags(tagList) {
+  function generateTags(tagList, eventFunction) {
     const tags = document.createElement("div");
     tags.classList.add("tags");
     for (const tag of tagList) {
       const button = document.createElement("button");
       button.textContent = tag;
       button.addEventListener("click", () => {
-        console.log(`${tag}'s button fired`);
+        eventFunction();
       });
       tags.appendChild(button);
     }
@@ -58,14 +58,14 @@ const homepage = (() => {
     return tags;
   }
 
-  function generateSidebar(projectList) {
+  function generateSidebar(projectList, eventFunction) {
     const sidebar = document.createElement("div");
     sidebar.classList.add("sidebar");
     for (const project of projectList) {
       const button = document.createElement("button");
       button.textContent = project;
       button.addEventListener("click", () => {
-        console.log(`${project}'s button fired`);
+        eventFunction();
       });
       sidebar.appendChild(button);
     }
@@ -73,7 +73,7 @@ const homepage = (() => {
     return sidebar;
   }
 
-  function generateBody(notecardList) {
+  function generateBody(notecardList, eventFunction) {
     const body = document.createElement("div");
     body.classList.add("body");
     for (const notecard of notecardList) {
@@ -94,7 +94,7 @@ const homepage = (() => {
       notecardInner.appendChild(description);
 
       notecardInner.addEventListener("click", () => {
-        console.log("notecard flip event fired");
+        eventFunction();
       });
 
       notecardContainer.appendChild(notecardInner);
@@ -111,43 +111,24 @@ const homepage = (() => {
     return footer;
   }
 
-  // function generateHomePage(projectList, tagList, notecardList) {
-  function generateHomePage() {
+  function generateHomePage(
+    subjectList,
+    tagList,
+    notecardList,
+    headerEvent,
+    tagsEvent,
+    subjectEvent,
+    bodyEvent
+  ) {
     const content = document.querySelector("#content");
     content.textContent = "";
 
     const homePage = document.createElement("div");
     homePage.classList.add("homepage");
-    homePage.appendChild(generateHeader());
-    homePage.appendChild(generateTags(["tag1", "tag2", "tag3"]));
-    homePage.appendChild(
-      generateSidebar([
-        "english",
-        "math",
-        "science",
-        "arts and crafts",
-        "history",
-      ])
-    );
-    homePage.appendChild(
-      generateBody([
-        [
-          "title",
-          `Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi
-    sequi quasi natus? Aut, praesentium voluptates?`,
-        ],
-        [
-          "title",
-          `Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi
-    sequi quasi natus? Aut, praesentium voluptates?`,
-        ],
-        [
-          "title",
-          `Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi
-    sequi quasi natus? Aut, praesentium voluptates?`,
-        ],
-      ])
-    );
+    homePage.appendChild(generateHeader(headerEvent));
+    homePage.appendChild(generateTags(tagList, tagsEvent));
+    homePage.appendChild(generateSidebar(subjectList, subjectEvent));
+    homePage.appendChild(generateBody(notecardList, bodyEvent));
     homePage.appendChild(generateFooter());
     content.appendChild(homePage);
   }
@@ -155,5 +136,4 @@ const homepage = (() => {
   return { generateHomePage };
 })();
 
-// eslint-disable-next-line import/prefer-default-export
 export { flipper, homepage };
