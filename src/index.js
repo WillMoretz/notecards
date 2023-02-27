@@ -12,20 +12,24 @@ const notecardStorage = (() => {
     notecards.splice(index, 1);
   }
 
+  function getAllNotecards() {
+    return notecards;
+  }
+
   // returns an array of items that have all matching tags
   function getNotecardByTags(tags) {
-    return notecards.filter(
-      (notecard) => notecard.tags.sort().join(",") === tags.sort().join(",")
-    );
+    if (tags.length === 0) return getAllNotecards();
+    return notecards.filter((notecard) => {
+      for (const tag of tags) {
+        if (notecard.tags.includes(tag)) return true;
+      }
+      return false;
+    });
   }
 
   // returns an array of items that have a matching project
   function getNotecardBySubject(subject) {
     return notecards.filter((notecard) => notecard.subject === subject);
-  }
-
-  function getAllNotecards() {
-    return notecards;
   }
 
   return {
@@ -164,7 +168,6 @@ const homepage = (() => {
     body.classList.add("body");
 
     for (const card of notecardList) {
-      // const cardArray = card.toArray();
       const notecardContainer = document.createElement("button");
       notecardContainer.classList.add("notecard");
 
@@ -300,7 +303,12 @@ const pageManager = (() => {
       )
     );
     notecardStorage.addNotecard(
-      notecard("title2", ["tag1", "tag2"], "lorem ipsum blah blah blah", "math")
+      notecard(
+        "title2",
+        ["tag1", "tag2"],
+        "lorem ipsum blah blah blaaaaaaah",
+        "math"
+      )
     );
     notecardStorage.addNotecard(
       notecard(
@@ -311,7 +319,12 @@ const pageManager = (() => {
       )
     );
     notecardStorage.addNotecard(
-      notecard("title4", ["tag3"], "lorem ipsum blah blah blah", "science")
+      notecard(
+        "title4",
+        ["tag3", "tag4"],
+        "lorem ipsum blah blah blah",
+        "science"
+      )
     );
     notecardStorage.addNotecard(
       notecard(
