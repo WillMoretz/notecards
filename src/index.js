@@ -1,3 +1,5 @@
+import { flipper, homepage } from "./DOM";
+
 // notecardStorage Module Pattern
 // will store notecards in an array. Will add and delete notecards
 const notecardStorage = (() => {
@@ -119,29 +121,6 @@ const pageManager = (() => {
   return { displaySubject, displayTags, displayAll };
 })();
 
-const flipper = (() => {
-  function flipToFront(cardClasslist) {
-    cardClasslist.remove("rotated");
-  }
-
-  function flipToBack(cardClasslist) {
-    cardClasslist.remove("rotated");
-    cardClasslist.add("rotated");
-  }
-
-  function flip(cardClasslist) {
-    if (!cardClasslist.contains("rotated")) {
-      flipToBack(cardClasslist);
-    } else {
-      flipToFront(cardClasslist);
-    }
-  }
-
-  return { flipToFront, flipToBack, flip };
-})();
+homepage.generateHomePage();
 
 // Event Listeners that will interface with pageManager
-const CARDS = document.querySelectorAll(".notecard-inner");
-CARDS.forEach((CARD) => {
-  CARD.addEventListener("click", () => flipper.flip(CARD.classList));
-});
