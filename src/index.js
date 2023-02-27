@@ -1,4 +1,3 @@
-/* eslint-disable prefer-destructuring */
 // notecardStorage Module Pattern
 // will store notecards in an array. Will add and delete notecards
 const notecardStorage = (() => {
@@ -157,6 +156,39 @@ const homepage = (() => {
     return header;
   }
 
+  function generateBody(notecardList) {
+    const body = document.createElement("div");
+    body.classList.add("body");
+
+    for (const card of notecardList) {
+      // const cardArray = card.toArray();
+      const notecardContainer = document.createElement("button");
+      notecardContainer.classList.add("notecard");
+
+      const notecardInner = document.createElement("div");
+      notecardInner.classList.add("notecard-inner");
+
+      const title = document.createElement("div");
+      title.classList.add("title");
+      title.textContent = card.title;
+      notecardInner.appendChild(title);
+
+      const description = document.createElement("div");
+      description.classList.add("description");
+      description.textContent = card.content;
+      notecardInner.appendChild(description);
+
+      notecardInner.addEventListener("click", () => {
+        flipper.flip(notecardInner.classList);
+      });
+
+      notecardContainer.appendChild(notecardInner);
+      body.appendChild(notecardContainer);
+    }
+
+    return body;
+  }
+
   function generateTags(tagList) {
     const tags = document.createElement("div");
     tags.classList.add("tags");
@@ -172,51 +204,27 @@ const homepage = (() => {
     return tags;
   }
 
-  function generateSidebar(projectList) {
+  function generateSidebar(subjectList) {
     const sidebar = document.createElement("div");
     sidebar.classList.add("sidebar");
 
-    for (const project of projectList) {
+    for (const subject of subjectList) {
       const button = document.createElement("button");
-      button.textContent = project;
+      button.textContent = subject;
 
-      button.addEventListener("click", () => {});
+      button.addEventListener("click", () => {
+        const notecardList = notecardStorage.getNotecardBySubject(subject);
+        document
+          .querySelector(".homepage")
+          .replaceChild(
+            generateBody(notecardList),
+            document.querySelector(".body")
+          );
+      });
       sidebar.appendChild(button);
     }
 
     return sidebar;
-  }
-
-  function generateBody(notecardList) {
-    const body = document.createElement("div");
-    body.classList.add("body");
-
-    for (const card of notecardList) {
-      const notecardContainer = document.createElement("button");
-      notecardContainer.classList.add("notecard");
-
-      const notecardInner = document.createElement("div");
-      notecardInner.classList.add("notecard-inner");
-
-      const title = document.createElement("div");
-      title.classList.add("title");
-      title.textContent = card[0];
-      notecardInner.appendChild(title);
-
-      const description = document.createElement("div");
-      description.classList.add("description");
-      description.textContent = card[1];
-      notecardInner.appendChild(description);
-
-      notecardInner.addEventListener("click", () => {
-        flipper.flip(notecardInner.classList);
-      });
-
-      notecardContainer.appendChild(notecardInner);
-      body.appendChild(notecardContainer);
-    }
-
-    return body;
   }
 
   function generateFooter() {
@@ -275,31 +283,25 @@ const pageManager = (() => {
     tagStorage.addTag("tag2");
     tagStorage.addTag("tag3");
     notecardStorage.addNotecard(
-      notecard("title", "", "lorem ipsum blah blah blah", "")
+      notecard("title1", "", "lorem ipsum blah blah blah", "english")
     );
     notecardStorage.addNotecard(
-      notecard("title", "", "lorem ipsum blah blah blah", "")
+      notecard("title2", "", "lorem ipsum blah blah blah", "math")
     );
     notecardStorage.addNotecard(
-      notecard("title", "", "lorem ipsum blah blah blah", "")
+      notecard("title3", "", "lorem ipsum blah blah blah", "science")
     );
     notecardStorage.addNotecard(
-      notecard("title", "", "lorem ipsum blah blah blah", "")
+      notecard("title4", "", "lorem ipsum blah blah blah", "science")
     );
     notecardStorage.addNotecard(
-      notecard("title", "", "lorem ipsum blah blah blah", "")
+      notecard("title5", "", "lorem ipsum blah blah blah", "history")
     );
-
-    const notecards = notecardStorage.getAllNotecards();
-    const notecardsValues = [];
-    for (const card of notecards) {
-      notecardsValues.push([card.title, card.content]);
-    }
 
     homepage.generateHomePage(
       subjectStorage.getSubjects(),
       tagStorage.getTags(),
-      notecardsValues
+      notecardStorage.getAllNotecards()
     );
   }
 
