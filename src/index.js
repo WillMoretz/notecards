@@ -103,24 +103,79 @@ const tagStorage = (() => {
 // pageManager module pattern
 // will call DOM functions and functions defined above
 const pageManager = (() => {
-  function displaySubject(subject) {
+  function displaySubjectCards(subject) {
     const currentNotecards = notecardStorage.getNotecardBySubject(subject);
     // Call DOM method to display currentNotecards
   }
 
-  function displayTags(tags) {
+  function displayTagsCards(tags) {
     const currentNotecards = notecardStorage.getNotecardByTags(tags);
     // Call DOM method to display currentNotecards
   }
 
-  function displayAll() {
+  function displayAllCards() {
     const currentNotecards = notecardStorage.getAllNotecards();
     // Call DOM method to display currentNoteCards
   }
 
-  return { displaySubject, displayTags, displayAll };
+  function InitHomepage() {
+    // retrieve any saved notecards from local storage
+    // store retrieved content
+
+    // Dummy Content
+    subjectStorage.addSubject("english");
+    subjectStorage.addSubject("math");
+    subjectStorage.addSubject("science");
+    subjectStorage.addSubject("geography");
+    subjectStorage.addSubject("history");
+    tagStorage.addTag("tag1");
+    tagStorage.addTag("tag2");
+    tagStorage.addTag("tag3");
+    notecardStorage.addNotecard(
+      notecard("title", "", "lorem ipsum blah blah blah", "")
+    );
+    notecardStorage.addNotecard(
+      notecard("title", "", "lorem ipsum blah blah blah", "")
+    );
+    notecardStorage.addNotecard(
+      notecard("title", "", "lorem ipsum blah blah blah", "")
+    );
+    notecardStorage.addNotecard(
+      notecard("title", "", "lorem ipsum blah blah blah", "")
+    );
+    notecardStorage.addNotecard(
+      notecard("title", "", "lorem ipsum blah blah blah", "")
+    );
+
+    const notecards = notecardStorage.getAllNotecards();
+    const notecardsValues = [];
+    for (const card of notecards) {
+      notecardsValues.push([card.title, card.content]);
+    }
+
+    function sayHi() {
+      console.log("hi!");
+    }
+
+    homepage.generateHomePage(
+      subjectStorage.getSubjects(),
+      tagStorage.getTags(),
+      notecardsValues,
+      sayHi,
+      sayHi,
+      sayHi,
+      sayHi
+    );
+  }
+
+  return {
+    displaySubjectCards,
+    displayTagsCards,
+    displayAllCards,
+    InitHomepage,
+  };
 })();
 
-homepage.generateHomePage();
+pageManager.InitHomepage();
 
 // Event Listeners that will interface with pageManager
