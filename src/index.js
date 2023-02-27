@@ -119,7 +119,7 @@ const flipper = (() => {
 })();
 
 const homepage = (() => {
-  function generateHeader(eventFunction) {
+  function generateHeader() {
     const header = document.createElement("div");
     header.classList.add("header");
 
@@ -132,48 +132,65 @@ const homepage = (() => {
 
     const flipAllButton = document.createElement("button");
     flipAllButton.textContent = "Flip All";
+
     flipAllButton.addEventListener("click", () => {
-      eventFunction();
+      const notecards = document.querySelectorAll(".notecard-inner");
+      let allFront = true;
+
+      for (const card of notecards) {
+        if (card.classList.contains("rotated")) {
+          allFront = false;
+          break;
+        }
+      }
+
+      if (allFront) {
+        for (const card of notecards) flipper.flipToBack(card.classList);
+      } else {
+        for (const card of notecards) flipper.flipToFront(card.classList);
+      }
     });
+
     nav.appendChild(flipAllButton);
 
     header.appendChild(nav);
     return header;
   }
 
-  function generateTags(tagList, eventFunction) {
+  function generateTags(tagList) {
     const tags = document.createElement("div");
     tags.classList.add("tags");
+
     for (const tag of tagList) {
       const button = document.createElement("button");
       button.textContent = tag;
-      button.addEventListener("click", () => {
-        eventFunction();
-      });
+
+      button.addEventListener("click", () => {});
       tags.appendChild(button);
     }
 
     return tags;
   }
 
-  function generateSidebar(projectList, eventFunction) {
+  function generateSidebar(projectList) {
     const sidebar = document.createElement("div");
     sidebar.classList.add("sidebar");
+
     for (const project of projectList) {
       const button = document.createElement("button");
       button.textContent = project;
-      button.addEventListener("click", () => {
-        eventFunction();
-      });
+
+      button.addEventListener("click", () => {});
       sidebar.appendChild(button);
     }
 
     return sidebar;
   }
 
-  function generateBody(notecardList, eventFunction) {
+  function generateBody(notecardList) {
     const body = document.createElement("div");
     body.classList.add("body");
+
     for (const card of notecardList) {
       const notecardContainer = document.createElement("button");
       notecardContainer.classList.add("notecard");
@@ -192,7 +209,7 @@ const homepage = (() => {
       notecardInner.appendChild(description);
 
       notecardInner.addEventListener("click", () => {
-        eventFunction();
+        flipper.flip(notecardInner.classList);
       });
 
       notecardContainer.appendChild(notecardInner);
@@ -209,24 +226,16 @@ const homepage = (() => {
     return footer;
   }
 
-  function generateHomePage(
-    subjectList,
-    tagList,
-    notecardList,
-    headerEvent,
-    tagsEvent,
-    subjectEvent,
-    bodyEvent
-  ) {
+  function generateHomePage(subjectList, tagList, notecardList) {
     const content = document.querySelector("#content");
     content.textContent = "";
 
     const homePage = document.createElement("div");
     homePage.classList.add("homepage");
-    homePage.appendChild(generateHeader(headerEvent));
-    homePage.appendChild(generateTags(tagList, tagsEvent));
-    homePage.appendChild(generateSidebar(subjectList, subjectEvent));
-    homePage.appendChild(generateBody(notecardList, bodyEvent));
+    homePage.appendChild(generateHeader());
+    homePage.appendChild(generateTags(tagList));
+    homePage.appendChild(generateSidebar(subjectList));
+    homePage.appendChild(generateBody(notecardList));
     homePage.appendChild(generateFooter());
     content.appendChild(homePage);
   }
@@ -287,18 +296,10 @@ const pageManager = (() => {
       notecardsValues.push([card.title, card.content]);
     }
 
-    function sayHi() {
-      console.log("hi!");
-    }
-
     homepage.generateHomePage(
       subjectStorage.getSubjects(),
       tagStorage.getTags(),
-      notecardsValues,
-      sayHi,
-      sayHi,
-      sayHi,
-      sayHi
+      notecardsValues
     );
   }
 
