@@ -275,21 +275,6 @@ const homepage = (() => {
 // pageManager module pattern
 // will call DOM functions and functions defined above
 const pageManager = (() => {
-  function displaySubjectCards(subject) {
-    const currentNotecards = notecardStorage.getNotecardBySubject(subject);
-    // Call DOM method to display currentNotecards
-  }
-
-  function displayTagsCards(tags) {
-    const currentNotecards = notecardStorage.getNotecardByTags(tags);
-    // Call DOM method to display currentNotecards
-  }
-
-  function displayAllCards() {
-    const currentNotecards = notecardStorage.getAllNotecards();
-    // Call DOM method to display currentNoteCards
-  }
-
   function InitHomepage() {
     // retrieve any saved notecards from local storage
     // store retrieved content
