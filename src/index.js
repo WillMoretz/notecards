@@ -197,7 +197,28 @@ const homepage = (() => {
       const button = document.createElement("button");
       button.textContent = tag;
 
-      button.addEventListener("click", () => {});
+      button.addEventListener("click", () => {
+        if (button.classList.contains("tag-selected")) {
+          button.classList.remove("tag-selected");
+        } else button.classList.add("tag-selected");
+
+        const selectedTags = document.querySelectorAll(".tag-selected");
+        const selectedTagsTextContent = [];
+        for (const selectedTag of selectedTags) {
+          selectedTagsTextContent.push(selectedTag.textContent);
+        }
+
+        const notecardList = notecardStorage.getNotecardByTags(
+          selectedTagsTextContent
+        );
+        document
+          .querySelector(".homepage")
+          .replaceChild(
+            generateBody(notecardList),
+            document.querySelector(".body")
+          );
+      });
+
       tags.appendChild(button);
     }
 
@@ -283,19 +304,34 @@ const pageManager = (() => {
     tagStorage.addTag("tag2");
     tagStorage.addTag("tag3");
     notecardStorage.addNotecard(
-      notecard("title1", "", "lorem ipsum blah blah blah", "english")
+      notecard(
+        "title1",
+        ["tag1", "tag2", "tag3"],
+        "lorem ipsum blah blah blah",
+        "english"
+      )
     );
     notecardStorage.addNotecard(
-      notecard("title2", "", "lorem ipsum blah blah blah", "math")
+      notecard("title2", ["tag1", "tag2"], "lorem ipsum blah blah blah", "math")
     );
     notecardStorage.addNotecard(
-      notecard("title3", "", "lorem ipsum blah blah blah", "science")
+      notecard(
+        "title3",
+        ["tag1", "tag2"],
+        "lorem ipsum blah blah blah",
+        "science"
+      )
     );
     notecardStorage.addNotecard(
-      notecard("title4", "", "lorem ipsum blah blah blah", "science")
+      notecard("title4", ["tag3"], "lorem ipsum blah blah blah", "science")
     );
     notecardStorage.addNotecard(
-      notecard("title5", "", "lorem ipsum blah blah blah", "history")
+      notecard(
+        "title5",
+        ["tag2", "tag3"],
+        "lorem ipsum blah blah blah",
+        "history"
+      )
     );
 
     homepage.generateHomePage(
