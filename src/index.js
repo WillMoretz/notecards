@@ -138,7 +138,6 @@ const notecardFilterer = (() => {
         return true;
       });
     }
-    console.log(notecards);
     return notecards;
   }
 
@@ -208,6 +207,15 @@ const homepage = (() => {
     return header;
   }
 
+  function refreshBody() {
+    document
+      .querySelector(".homepage")
+      .replaceChild(
+        generateBody(notecardFilterer.filter()),
+        document.querySelector(".body")
+      );
+  }
+
   function generateBody(notecardList) {
     const body = document.createElement("div");
     body.classList.add("body");
@@ -253,12 +261,7 @@ const homepage = (() => {
           button.classList.remove("tag-selected");
         } else button.classList.add("tag-selected");
 
-        document
-          .querySelector(".homepage")
-          .replaceChild(
-            generateBody(notecardFilterer.filter()),
-            document.querySelector(".body")
-          );
+        refreshBody();
       });
 
       tags.appendChild(button);
@@ -278,25 +281,14 @@ const homepage = (() => {
       button.addEventListener("click", () => {
         if (button.classList.contains("subject-selected")) {
           button.classList.remove("subject-selected");
-          document
-            .querySelector(".homepage")
-            .replaceChild(
-              generateBody(notecardFilterer.filter()),
-              document.querySelector(".body")
-            );
+          refreshBody();
           return;
         }
         for (const sub of sidebar.children) {
           sub.classList.remove("subject-selected");
         }
         button.classList.add("subject-selected");
-
-        document
-          .querySelector(".homepage")
-          .replaceChild(
-            generateBody(notecardFilterer.filter()),
-            document.querySelector(".body")
-          );
+        refreshBody();
       });
       sidebar.appendChild(button);
     }
