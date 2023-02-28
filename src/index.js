@@ -207,15 +207,6 @@ const homepage = (() => {
     return header;
   }
 
-  function refreshBody() {
-    document
-      .querySelector(".homepage")
-      .replaceChild(
-        generateBody(notecardFilterer.filter()),
-        document.querySelector(".body")
-      );
-  }
-
   function generateBody(notecardList) {
     const body = document.createElement("div");
     body.classList.add("body");
@@ -248,6 +239,15 @@ const homepage = (() => {
     return body;
   }
 
+  function refreshBody() {
+    document
+      .querySelector(".homepage")
+      .replaceChild(
+        generateBody(notecardFilterer.filter()),
+        document.querySelector(".body")
+      );
+  }
+
   function generateTags(tagList) {
     const tags = document.createElement("div");
     tags.classList.add("tags");
@@ -270,6 +270,19 @@ const homepage = (() => {
     return tags;
   }
 
+  function filterTagsBySubject(subject) {
+    const notecards = notecardStorage.getNotecardBySubject(subject);
+    const tagList = [];
+
+    for (const card of notecards) {
+      for (const tag of card.tags) {
+        if (!tagList.includes(tag)) tagList.push(tag);
+      }
+    }
+
+    return tagList;
+  }
+
   function generateSidebar(subjectList) {
     const sidebar = document.createElement("div");
     sidebar.classList.add("sidebar");
@@ -284,6 +297,9 @@ const homepage = (() => {
           refreshBody();
           return;
         }
+
+        filterTagsBySubject(subject);
+
         for (const sub of sidebar.children) {
           sub.classList.remove("subject-selected");
         }
