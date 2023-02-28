@@ -100,6 +100,51 @@ const tagStorage = (() => {
   return { addTag, removeTag, getTags };
 })();
 
+const notecardFilterer = (() => {
+  function getSelectedSubject() {
+    const selectedSubject = document.querySelector(".subject-selected");
+    if (selectedSubject === null) return "none";
+    return selectedSubject.textContent;
+  }
+
+  function getSelectedTags() {
+    const selectedTags = document.querySelectorAll(".tag-selected");
+    const selectedTagsTextContent = [];
+    for (const selectedTag of selectedTags) {
+      selectedTagsTextContent.push(selectedTag.textContent);
+    }
+    if (selectedTagsTextContent.length === 0) return "none";
+    return selectedTagsTextContent;
+  }
+
+  function filter() {
+    const selectedSubject = getSelectedSubject();
+    const selectedTags = getSelectedTags();
+    let notecards = [];
+
+    if (selectedSubject === "none") {
+      notecards = notecards.concat(notecardStorage.getAllNotecards());
+    } else {
+      notecards = notecards.concat(
+        notecardStorage.getNotecardBySubject(selectedSubject)
+      );
+    }
+
+    if (selectedTags !== "none") {
+      notecards = notecards.filter((card) => {
+        for (const tag of selectedTags) {
+          if (!card.tags.includes(tag)) return false;
+        }
+        return true;
+      });
+    }
+    console.log(notecards);
+    return notecards;
+  }
+
+  return { filter };
+})();
+
 const flipper = (() => {
   function flipToFront(cardClasslist) {
     cardClasslist.remove("rotated");
@@ -208,19 +253,10 @@ const homepage = (() => {
           button.classList.remove("tag-selected");
         } else button.classList.add("tag-selected");
 
-        const selectedTags = document.querySelectorAll(".tag-selected");
-        const selectedTagsTextContent = [];
-        for (const selectedTag of selectedTags) {
-          selectedTagsTextContent.push(selectedTag.textContent);
-        }
-
-        const notecardList = notecardStorage.getNotecardByTags(
-          selectedTagsTextContent
-        );
         document
           .querySelector(".homepage")
           .replaceChild(
-            generateBody(notecardList),
+            generateBody(notecardFilterer.filter()),
             document.querySelector(".body")
           );
       });
@@ -240,11 +276,25 @@ const homepage = (() => {
       button.textContent = subject;
 
       button.addEventListener("click", () => {
-        const notecardList = notecardStorage.getNotecardBySubject(subject);
+        if (button.classList.contains("subject-selected")) {
+          button.classList.remove("subject-selected");
+          document
+            .querySelector(".homepage")
+            .replaceChild(
+              generateBody(notecardFilterer.filter()),
+              document.querySelector(".body")
+            );
+          return;
+        }
+        for (const sub of sidebar.children) {
+          sub.classList.remove("subject-selected");
+        }
+        button.classList.add("subject-selected");
+
         document
           .querySelector(".homepage")
           .replaceChild(
-            generateBody(notecardList),
+            generateBody(notecardFilterer.filter()),
             document.querySelector(".body")
           );
       });
