@@ -270,6 +270,21 @@ const homepage = (() => {
     return tags;
   }
 
+  function refreshTags(tagList) {
+    if (tagList === "none") {
+      document
+        .querySelector(".homepage")
+        .replaceChild(
+          generateTags(tagStorage.getTags()),
+          document.querySelector(".tags")
+        );
+    } else {
+      document
+        .querySelector(".homepage")
+        .replaceChild(generateTags(tagList), document.querySelector(".tags"));
+    }
+  }
+
   function filterTagsBySubject(subject) {
     const notecards = notecardStorage.getNotecardBySubject(subject);
     const tagList = [];
@@ -295,10 +310,11 @@ const homepage = (() => {
         if (button.classList.contains("subject-selected")) {
           button.classList.remove("subject-selected");
           refreshBody();
+          refreshTags("none");
           return;
         }
 
-        filterTagsBySubject(subject);
+        refreshTags(filterTagsBySubject(subject));
 
         for (const sub of sidebar.children) {
           sub.classList.remove("subject-selected");
