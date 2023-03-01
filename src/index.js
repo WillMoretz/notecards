@@ -225,17 +225,21 @@ const homepage = (() => {
       title.classList.add("title");
       title.textContent = card.title;
       notecardFront.appendChild(title);
-
-      const tags = document.createElement("div");
-      tags.classList.add("notecard-tags");
-      tags.textContent = card.tags.join(" | ");
-      notecardFront.appendChild(tags);
       notecardInner.appendChild(notecardFront);
+
+      const notecardBack = document.createElement("div");
+      notecardBack.classList.add("notecard-back");
 
       const description = document.createElement("div");
       description.classList.add("description");
       description.textContent = card.content;
-      notecardInner.appendChild(description);
+      notecardBack.appendChild(description);
+
+      const tags = document.createElement("div");
+      tags.classList.add("notecard-tags");
+      tags.textContent = card.tags.join(" | ");
+      notecardBack.appendChild(tags);
+      notecardInner.appendChild(notecardBack);
 
       notecardInner.addEventListener("click", () => {
         flipper.flip(notecardInner.classList);
