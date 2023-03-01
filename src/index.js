@@ -315,6 +315,12 @@ const homepage = (() => {
     const sidebar = document.createElement("div");
     sidebar.classList.add("sidebar");
 
+    const subjectsLabel = document.createElement("div");
+    subjectsLabel.classList.add(".subjects-label");
+    subjectsLabel.textContent = "Subjects";
+    sidebar.appendChild(subjectsLabel);
+    console.log(subjectsLabel);
+
     for (const subject of subjectList) {
       const button = document.createElement("button");
       button.textContent = subject;
