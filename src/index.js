@@ -218,10 +218,19 @@ const homepage = (() => {
       const notecardInner = document.createElement("div");
       notecardInner.classList.add("notecard-inner");
 
+      const notecardFront = document.createElement("div");
+      notecardFront.classList.add("notecard-front");
+
       const title = document.createElement("div");
       title.classList.add("title");
       title.textContent = card.title;
-      notecardInner.appendChild(title);
+      notecardFront.appendChild(title);
+
+      const tags = document.createElement("div");
+      tags.classList.add("notecard-tags");
+      tags.textContent = card.tags.join(" | ");
+      notecardFront.appendChild(tags);
+      notecardInner.appendChild(notecardFront);
 
       const description = document.createElement("div");
       description.classList.add("description");
