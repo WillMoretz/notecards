@@ -177,3 +177,17 @@ button:hover {
   font-weight: 600;
   font-style: italic;
 }
+
+.homepage > .tags > .tag-selected,
+.homepage > .sidebar > .subject-selected {
+  color: var(--highlight, pink);
+  font-weight: 900;
+}
+
+.homepage > .tags > .tag-selected {
+  background-color: var(--dark, black);
+}
+
+.homepage > .sidebar > .subject-selected {
+  background-color: rgba(0, 0, 0, 0.2);
+}
