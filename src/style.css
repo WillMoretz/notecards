@@ -148,7 +148,7 @@ button:hover {
 }
 
 .notecard-front,
-.description {
+.notecard-back {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   position: absolute;
@@ -159,7 +159,7 @@ button:hover {
   align-items: center;
 }
 
-.description {
+.notecard-back {
   transform: rotateX(180deg);
 }
 
@@ -173,7 +173,7 @@ button:hover {
 
 .notecard-tags {
   position: absolute;
-  bottom: 0;
+  top: 0;
   font-size: 0.75rem;
   font-style: italic;
 }
