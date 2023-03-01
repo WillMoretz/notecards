@@ -5,6 +5,7 @@ import {
   notecardStorage,
   notecard,
 } from "./notecards";
+import form from "./form";
 
 // pageManager module pattern
 // will call DOM functions and functions defined above
@@ -15,7 +16,7 @@ const pageManager = (() => {
     PAGECONTAINER.textContent = "";
   }
 
-  function InitHomepage() {
+  function initHomepage() {
     // retrieve any saved notecards from local storage
     // store retrieved content
 
@@ -79,11 +80,17 @@ const pageManager = (() => {
     );
   }
 
+  function initForm() {
+    resetPage();
+    PAGECONTAINER.appendChild(form.generateForm());
+  }
+
   return {
-    InitHomepage,
+    initHomepage,
+    initForm,
   };
 })();
 
-pageManager.InitHomepage();
+pageManager.initForm();
 
 // Event Listeners that will interface with pageManager
