@@ -255,9 +255,6 @@ const homepage = (() => {
   }
 
   function generateHomePage(subjectList, tagList, notecardList) {
-    const content = document.querySelector("#content");
-    content.textContent = "";
-
     const homePage = document.createElement("div");
     homePage.classList.add("homepage");
     homePage.appendChild(generateHeader());
@@ -265,7 +262,7 @@ const homepage = (() => {
     homePage.appendChild(generateSidebar(subjectList));
     homePage.appendChild(generateBody(notecardList));
     homePage.appendChild(generateFooter());
-    content.appendChild(homePage);
+    return homePage;
   }
 
   return { generateHomePage };

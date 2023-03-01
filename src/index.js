@@ -1,14 +1,20 @@
-import homepage from "../homepage";
+import homepage from "./homepage";
 import {
   subjectStorage,
   tagStorage,
   notecardStorage,
   notecard,
-} from "../notecards";
+} from "./notecards";
 
 // pageManager module pattern
 // will call DOM functions and functions defined above
 const pageManager = (() => {
+  const PAGECONTAINER = document.querySelector("#content");
+
+  function resetPage() {
+    PAGECONTAINER.textContent = "";
+  }
+
   function InitHomepage() {
     // retrieve any saved notecards from local storage
     // store retrieved content
@@ -63,10 +69,13 @@ const pageManager = (() => {
       )
     );
 
-    homepage.generateHomePage(
-      subjectStorage.getSubjects(),
-      tagStorage.getTags(),
-      notecardStorage.getAllNotecards()
+    resetPage();
+    PAGECONTAINER.appendChild(
+      homepage.generateHomePage(
+        subjectStorage.getSubjects(),
+        tagStorage.getTags(),
+        notecardStorage.getAllNotecards()
+      )
     );
   }
 
