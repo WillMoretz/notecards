@@ -147,7 +147,7 @@ button:hover {
   transform: rotateX(180deg);
 }
 
-.title,
+.notecard-front,
 .description {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
@@ -163,9 +163,19 @@ button:hover {
   transform: rotateX(180deg);
 }
 
-.title {
+.notecard-front {
   -webkit-transform: rotateY(0deg);
+}
+
+.title {
   font-size: 2rem;
+}
+
+.notecard-tags {
+  position: absolute;
+  bottom: 0;
+  font-size: 0.75rem;
+  font-style: italic;
 }
 
 .homepage > .footer {
