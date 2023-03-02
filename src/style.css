@@ -20,6 +20,39 @@ button:hover {
   cursor: pointer;
 }
 
+.pop-up {
+  display: none;
+  position: fixed;
+  bottom: 50%;
+  left: 50%;
+  transform: translate(-50%, calc(-50% + 128px));
+  background-color: var(--light);
+  padding: 64px;
+  border: 4px solid black;
+  z-index: 10;
+}
+
+.pop-up-overlay {
+  display: none;
+  position: fixed;
+  opacity: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 9;
+  pointer-events: none;
+}
+
+.pop-up-active {
+  display: block;
+}
+
+.pop-up-overlay.pop-up-active {
+  pointer-events: all;
+}
+
 .homepage {
   display: grid;
   grid-template-columns: auto 1fr;
