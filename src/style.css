@@ -71,10 +71,25 @@ button:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 250px;
 }
 
 .form-item > label {
   font-weight: 600;
+}
+
+.form-item > input,
+.input-error {
+  width: 100%;
+  text-align: center;
+}
+
+.input-error {
+  color: red;
+  font-size: 0.75rem;
+  font-style: italic;
+  margin-top: 1px;
+  min-height: 16px;
 }
 
 button[type="submit"] {
