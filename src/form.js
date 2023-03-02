@@ -1,4 +1,12 @@
 const formDOM = (() => {
+  function generateOverlay() {
+    const overlay = document.createElement("div");
+    overlay.classList.add("pop-up-overlay");
+    overlay.classList.add("pop-up-active"); // change to inactive by default
+
+    return overlay;
+  }
+
   function generateNotecardForm() {
     const form = document.createElement("form");
     form.textContent = "hello form";
@@ -8,6 +16,7 @@ const formDOM = (() => {
   function generateSubjectForm() {
     const form = document.createElement("form");
     form.classList.add("pop-up");
+    form.classList.add("pop-up-active"); // change to inactive by default
 
     const formRow1 = document.createElement("div");
     formRow1.classList.add("form-row");
@@ -43,7 +52,7 @@ const formDOM = (() => {
     return form;
   }
 
-  return { generateNotecardForm, generateSubjectForm };
+  return { generateNotecardForm, generateSubjectForm, generateOverlay };
 })();
 
 export default formDOM;
