@@ -1,3 +1,5 @@
+import { subjectStorage } from "./notecards";
+
 const formDOM = (() => {
   function generateOverlay() {
     const overlay = document.createElement("div");
@@ -61,6 +63,12 @@ const formDOM = (() => {
     subjectInput.setAttribute("id", "subject");
     subjectInput.setAttribute("name", "subject");
     formItem.appendChild(subjectInput);
+
+    const subjectInputErrorMessage = document.createElement("div");
+    subjectInputErrorMessage.classList.add("input-error");
+    subjectInputErrorMessage.classList.add("subject-input-error");
+    subjectInputErrorMessage.textContent = "";
+    formItem.appendChild(subjectInputErrorMessage);
     formRow1.appendChild(formItem);
     form.appendChild(formRow1);
 
@@ -69,10 +77,19 @@ const formDOM = (() => {
 
     const submitButton = document.createElement("button");
     submitButton.setAttribute("type", "submit");
-    submitButton.textContent = "submit";
+    submitButton.textContent = "Submit";
     submitButton.addEventListener("click", (e) => {
       e.preventDefault();
-      toggleDisplay(form);
+
+      if (subjectInput.value.length > 14) {
+        subjectInputErrorMessage.textContent =
+          "Input must be less than 14 characters";
+      } else if (subjectInput.value.length === 0) {
+        subjectInputErrorMessage.textContent = "Please enter a subject";
+      } else {
+        subjectStorage.addSubject(subjectInput.value);
+        toggleDisplay(form);
+      }
     });
     formRow2.appendChild(submitButton);
     form.appendChild(formRow2);
