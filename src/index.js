@@ -5,7 +5,7 @@ import {
   notecardStorage,
   notecard,
 } from "./notecards";
-import formDOM from "./form";
+import { formDOM, formValidator } from "./form";
 
 // pageManager module pattern
 // will call DOM functions and functions defined above
@@ -81,7 +81,6 @@ const pageManager = (() => {
   }
 
   function initForm() {
-    // resetPage();
     PAGECONTAINER.appendChild(formDOM.generateSubjectForm());
     PAGECONTAINER.appendChild(formDOM.generateOverlay());
   }
@@ -96,3 +95,12 @@ pageManager.initHomepage();
 pageManager.initForm();
 
 // Event Listeners that will interface with pageManager
+document.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const form = document.querySelector(".pop-up");
+  if (form.id === formValidator.subjectFormID) {
+    formValidator.validateSubjectForm();
+  } else if (form.id === formValidator.notecardFormID) {
+    formValidator.validateNotecardForm();
+  }
+});
