@@ -22,6 +22,18 @@ const formDOM = (() => {
     }
   }
 
+  function generateCloseButton(form) {
+    const closeButton = document.createElement("button");
+    closeButton.setAttribute("type", "button");
+    closeButton.classList.add("pop-up-close");
+    closeButton.textContent = "X";
+    closeButton.addEventListener("click", () => {
+      toggleDisplay(form);
+    });
+
+    return closeButton;
+  }
+
   function generateNotecardForm() {
     const form = document.createElement("form");
     form.textContent = "hello form";
@@ -64,6 +76,8 @@ const formDOM = (() => {
     });
     formRow2.appendChild(submitButton);
     form.appendChild(formRow2);
+
+    form.appendChild(generateCloseButton(form));
 
     return form;
   }
