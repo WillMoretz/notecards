@@ -5,7 +5,7 @@ import {
   notecardStorage,
   notecard,
 } from "./notecards";
-import form from "./form";
+import formDOM from "./form";
 
 // pageManager module pattern
 // will call DOM functions and functions defined above
@@ -81,8 +81,9 @@ const pageManager = (() => {
   }
 
   function initForm() {
-    resetPage();
-    PAGECONTAINER.appendChild(form.generateForm());
+    // resetPage();
+    PAGECONTAINER.appendChild(formDOM.generateSubjectForm());
+    PAGECONTAINER.appendChild(formDOM.generateOverlay());
   }
 
   return {
@@ -91,6 +92,7 @@ const pageManager = (() => {
   };
 })();
 
+pageManager.initHomepage();
 pageManager.initForm();
 
 // Event Listeners that will interface with pageManager
