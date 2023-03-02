@@ -2,9 +2,24 @@ const formDOM = (() => {
   function generateOverlay() {
     const overlay = document.createElement("div");
     overlay.classList.add("pop-up-overlay");
-    overlay.classList.add("pop-up-active"); // change to inactive by default
+    overlay.classList.add("pop-up-overlay-active"); // change to inactive by default
 
     return overlay;
+  }
+
+  function toggleDisplay(popUp) {
+    const overlay = document.querySelector(".pop-up-overlay");
+    if (popUp.classList.contains("pop-up-active")) {
+      popUp.classList.remove("pop-up-active");
+      popUp.classList.add("pop-up-inactive");
+      overlay.classList.remove("pop-up-overlay-active");
+      overlay.classList.add("pop-up-overlay-inactive");
+    } else {
+      popUp.classList.remove("pop-up-inactive");
+      popUp.classList.add("pop-up-active");
+      overlay.classList.remove("pop-up-overlay-inactive");
+      overlay.classList.add("pop-up-overlay-active");
+    }
   }
 
   function generateNotecardForm() {
@@ -26,7 +41,7 @@ const formDOM = (() => {
 
     const subjectLabel = document.createElement("label");
     subjectLabel.setAttribute("for", "subject");
-    subjectLabel.textContent = "Subject";
+    subjectLabel.textContent = "New Subject";
     formItem.appendChild(subjectLabel);
 
     const subjectInput = document.createElement("input");
@@ -45,6 +60,7 @@ const formDOM = (() => {
     submitButton.textContent = "submit";
     submitButton.addEventListener("click", (e) => {
       e.preventDefault();
+      toggleDisplay(form);
     });
     formRow2.appendChild(submitButton);
     form.appendChild(formRow2);
