@@ -1,5 +1,25 @@
 import { subjectStorage } from "./notecards";
 
+const formValidator = (() => {
+  const subjectFormID = "subject-form";
+  const notecardFormID = "notecard-form";
+
+  function validateSubjectForm() {
+    console.log("subject form validation function ran");
+  }
+
+  function validateNotecardForm() {
+    console.log("notecard form validation function ran");
+  }
+
+  return {
+    validateSubjectForm,
+    validateNotecardForm,
+    subjectFormID,
+    notecardFormID,
+  };
+})();
+
 const formDOM = (() => {
   function generateOverlay() {
     const overlay = document.createElement("div");
@@ -46,6 +66,7 @@ const formDOM = (() => {
     const form = document.createElement("form");
     form.classList.add("pop-up");
     form.classList.add("pop-up-active"); // change to inactive by default
+    form.setAttribute("id", formValidator.subjectFormID);
 
     const formRow1 = document.createElement("div");
     formRow1.classList.add("form-row");
@@ -78,19 +99,19 @@ const formDOM = (() => {
     const submitButton = document.createElement("button");
     submitButton.setAttribute("type", "submit");
     submitButton.textContent = "Submit";
-    submitButton.addEventListener("click", (e) => {
-      e.preventDefault();
+    // submitButton.addEventListener("click", (e) => {
+    //   e.preventDefault();
 
-      if (subjectInput.value.length > 14) {
-        subjectInputErrorMessage.textContent =
-          "Input must be less than 14 characters";
-      } else if (subjectInput.value.length === 0) {
-        subjectInputErrorMessage.textContent = "Please enter a subject";
-      } else {
-        subjectStorage.addSubject(subjectInput.value);
-        toggleDisplay(form);
-      }
-    });
+    //   if (subjectInput.value.length > 14) {
+    //     subjectInputErrorMessage.textContent =
+    //       "Input must be less than 14 characters";
+    //   } else if (subjectInput.value.length === 0) {
+    //     subjectInputErrorMessage.textContent = "Please enter a subject";
+    //   } else {
+    //     subjectStorage.addSubject(subjectInput.value);
+    //     toggleDisplay(form);
+    //   }
+    // });
     formRow2.appendChild(submitButton);
     form.appendChild(formRow2);
 
@@ -102,4 +123,4 @@ const formDOM = (() => {
   return { generateNotecardForm, generateSubjectForm, generateOverlay };
 })();
 
-export default formDOM;
+export { formDOM, formValidator };
