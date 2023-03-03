@@ -110,6 +110,10 @@ document.addEventListener("submit", (e) => {
       formDOM.toggleDisplay(form);
     }
   } else if (form.id === formValidator.notecardFormID) {
-    formValidator.validateNotecardForm();
+    if (formValidator.validateNotecardForm()) {
+      homepage.refreshBody(notecardStorage.getAllNotecards());
+      homepage.refreshTags(tagStorage.getTags());
+      formDOM.toggleDisplay(form);
+    }
   }
 });
