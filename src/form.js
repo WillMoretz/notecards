@@ -1,4 +1,9 @@
-import { subjectStorage, tagStorage } from "./notecards";
+import {
+  subjectStorage,
+  tagStorage,
+  notecardStorage,
+  notecard,
+} from "./notecards";
 
 const formValidator = (() => {
   const subjectFormID = "subject-form";
@@ -26,7 +31,75 @@ const formValidator = (() => {
   }
 
   function validateNotecardForm() {
-    console.log("notecard form validation function ran");
+    const titleInput = document.querySelector("#title");
+    const titleInputErrorMessage = document.querySelector(".title-input-error");
+    const descriptionInput = document.querySelector("#description");
+    const descriptionInputErrorMessage = document.querySelector(
+      ".description-input-error"
+    );
+    const subjectInput = document.querySelector("#notecard-input-subject");
+    const tagsInput = document.querySelectorAll(".tag-input");
+    const tagInputErrorMessage = document.querySelector(".tag-input-error");
+
+    const tagsValues = [];
+    tagsInput.forEach((tag) => {
+      if (!tagsValues.includes(tag.value)) {
+        tagsValues.push(tag.value);
+      }
+    });
+
+    if (titleInput.value.length > 14) {
+      titleInputErrorMessage.textContent =
+        "Input must be less than 14 characters";
+      return false;
+    }
+
+    if (titleInput.value.length === 0) {
+      titleInputErrorMessage.textContent = "Please enter a title";
+      return false;
+    }
+    titleInputErrorMessage.textContent = "";
+
+    if (descriptionInput.value.length > 100) {
+      descriptionInputErrorMessage.textContent =
+        "Input must be less than 100 characters";
+      return false;
+    }
+
+    if (descriptionInput.value.length === 0) {
+      descriptionInputErrorMessage.textContent = "Please enter a description";
+      return false;
+    }
+    descriptionInputErrorMessage.textContent = "";
+
+    let noTagError = true;
+    tagsValues.forEach((value) => {
+      if (value.length > 14) {
+        tagInputErrorMessage.textContent =
+          "All tags must be less than 14 characters";
+        noTagError = false;
+      }
+    });
+    if (!noTagError) return false;
+
+    tagInputErrorMessage.textContent = "";
+
+    tagsValues.forEach((value) => {
+      if (!tagStorage.getTags().includes(value)) {
+        tagStorage.addTag(value);
+      }
+    });
+
+    notecardStorage.addNotecard(
+      notecard(
+        titleInput.value,
+        tagsValues,
+        descriptionInput.value,
+        subjectInput.value
+      )
+    );
+
+    return true;
   }
 
   return {
@@ -75,9 +148,10 @@ const formDOM = (() => {
 
   function generateTagInput() {
     const container = document.createElement("div");
-    container.classList.add("tag-input");
+    container.classList.add("tag-input-container");
 
     const tagInput = document.createElement("input");
+    tagInput.classList.add("tag-input");
     tagInput.setAttribute("type", "text");
     tagInput.setAttribute("id", "notecard-input-tag");
     tagInput.setAttribute("name", "notecard-input-tag");
@@ -87,7 +161,6 @@ const formDOM = (() => {
     const tagDatalist = document.createElement("datalist");
     tagDatalist.setAttribute("id", "tag-list");
     tagStorage.getTags().forEach((tag) => {
-      console.log(tag);
       const option = document.createElement("option");
       option.setAttribute("value", tag);
       tagDatalist.appendChild(option);
@@ -211,6 +284,12 @@ const formDOM = (() => {
       formItem4.insertBefore(generateTagInput(), addTagInput);
     });
     formItem4.appendChild(addTagInput);
+
+    const tagInputErrorMessage = document.createElement("div");
+    tagInputErrorMessage.classList.add("input-error");
+    tagInputErrorMessage.classList.add("tag-input-error");
+    tagInputErrorMessage.textContent = "";
+    formItem4.appendChild(tagInputErrorMessage);
     formRow4.appendChild(formItem4);
     form.appendChild(formRow4);
 
