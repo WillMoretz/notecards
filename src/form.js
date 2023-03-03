@@ -128,6 +128,30 @@ const formDOM = (() => {
     formRow2.appendChild(formItem2);
     form.appendChild(formRow2);
 
+    const formRow3 = document.createElement("div");
+    formRow3.classList.add("form-row");
+
+    const formItem3 = document.createElement("div");
+    formItem3.classList.add("form-item");
+
+    const notecardSubjectLabel = document.createElement("label");
+    notecardSubjectLabel.setAttribute("for", "notecard-input-subject");
+    notecardSubjectLabel.textContent = "Subject";
+    formItem3.appendChild(notecardSubjectLabel);
+
+    const notecardSubjectInput = document.createElement("select");
+    notecardSubjectInput.setAttribute("id", "notecard-input-subject");
+    notecardSubjectInput.setAttribute("name", "notecard-input-subject");
+    subjectStorage.getSubjects().forEach((subject) => {
+      const option = document.createElement("option");
+      option.setAttribute("value", subject);
+      option.textContent = subject;
+      notecardSubjectInput.appendChild(option);
+    });
+    formItem3.appendChild(notecardSubjectInput);
+    formRow3.appendChild(formItem3);
+    form.appendChild(formRow3);
+
     form.appendChild(generateCloseButton(form));
 
     return form;
