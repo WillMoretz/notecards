@@ -1,4 +1,4 @@
-import { subjectStorage } from "./notecards";
+import { subjectStorage, tagStorage } from "./notecards";
 
 const formValidator = (() => {
   const subjectFormID = "subject-form";
@@ -71,6 +71,39 @@ const formDOM = (() => {
     });
 
     return closeButton;
+  }
+
+  function generateTagInput() {
+    const container = document.createElement("div");
+    container.classList.add("tag-input");
+
+    const tagInput = document.createElement("input");
+    tagInput.setAttribute("type", "text");
+    tagInput.setAttribute("id", "notecard-input-tag");
+    tagInput.setAttribute("name", "notecard-input-tag");
+    tagInput.setAttribute("list", "tag-list");
+    container.appendChild(tagInput);
+
+    const tagDatalist = document.createElement("datalist");
+    tagDatalist.setAttribute("id", "tag-list");
+    tagStorage.getTags().forEach((tag) => {
+      console.log(tag);
+      const option = document.createElement("option");
+      option.setAttribute("value", tag);
+      tagDatalist.appendChild(option);
+    });
+    container.appendChild(tagDatalist);
+
+    const removeTagInput = document.createElement("button");
+    removeTagInput.classList.add("remove-tag");
+    removeTagInput.setAttribute("type", "button");
+    removeTagInput.textContent = "X";
+    removeTagInput.addEventListener("click", () => {
+      container.remove();
+    });
+    container.appendChild(removeTagInput);
+
+    return container;
   }
 
   function generateNotecardForm() {
@@ -151,6 +184,28 @@ const formDOM = (() => {
     formItem3.appendChild(notecardSubjectInput);
     formRow3.appendChild(formItem3);
     form.appendChild(formRow3);
+
+    const formRow4 = document.createElement("div");
+    formRow4.classList.add("form-row");
+
+    const formItem4 = document.createElement("div");
+    formItem4.classList.add("form-item");
+
+    const tagLabel = document.createElement("label");
+    tagLabel.setAttribute("for", "notecard-input-tag");
+    tagLabel.textContent = "Tags";
+    formItem4.appendChild(tagLabel);
+
+    const addTagInput = document.createElement("button");
+    addTagInput.classList.add("add-tag");
+    addTagInput.setAttribute("type", "button");
+    addTagInput.textContent = "+";
+    addTagInput.addEventListener("click", () => {
+      formItem4.insertBefore(generateTagInput(), addTagInput);
+    });
+    formItem4.appendChild(addTagInput);
+    formRow4.appendChild(formItem4);
+    form.appendChild(formRow4);
 
     form.appendChild(generateCloseButton(form));
 
