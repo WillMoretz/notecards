@@ -5,7 +5,24 @@ const formValidator = (() => {
   const notecardFormID = "notecard-form";
 
   function validateSubjectForm() {
-    console.log("subject form validation function ran");
+    const subjectInput = document.querySelector("#subject");
+    const subjectInputErrorMessage = document.querySelector(
+      ".subject-input-error"
+    );
+
+    if (subjectInput.value.length > 14) {
+      subjectInputErrorMessage.textContent =
+        "Input must be less than 14 characters";
+      return false;
+    }
+
+    if (subjectInput.value.length === 0) {
+      subjectInputErrorMessage.textContent = "Please enter a subject";
+      return false;
+    }
+
+    subjectStorage.addSubject(subjectInput.value);
+    return true;
   }
 
   function validateNotecardForm() {
@@ -100,17 +117,7 @@ const formDOM = (() => {
     submitButton.setAttribute("type", "submit");
     submitButton.textContent = "Submit";
     // submitButton.addEventListener("click", (e) => {
-    //   e.preventDefault();
 
-    //   if (subjectInput.value.length > 14) {
-    //     subjectInputErrorMessage.textContent =
-    //       "Input must be less than 14 characters";
-    //   } else if (subjectInput.value.length === 0) {
-    //     subjectInputErrorMessage.textContent = "Please enter a subject";
-    //   } else {
-    //     subjectStorage.addSubject(subjectInput.value);
-    //     toggleDisplay(form);
-    //   }
     // });
     formRow2.appendChild(submitButton);
     form.appendChild(formRow2);
@@ -120,7 +127,12 @@ const formDOM = (() => {
     return form;
   }
 
-  return { generateNotecardForm, generateSubjectForm, generateOverlay };
+  return {
+    generateNotecardForm,
+    generateSubjectForm,
+    generateOverlay,
+    toggleDisplay,
+  };
 })();
 
 export { formDOM, formValidator };
