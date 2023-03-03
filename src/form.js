@@ -281,6 +281,7 @@ const formDOM = (() => {
     addTagInput.setAttribute("type", "button");
     addTagInput.textContent = "+";
     addTagInput.addEventListener("click", () => {
+      if (document.querySelectorAll(".tag-input-container").length > 9) return;
       formItem4.insertBefore(generateTagInput(), addTagInput);
     });
     formItem4.appendChild(addTagInput);
