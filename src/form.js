@@ -75,7 +75,61 @@ const formDOM = (() => {
 
   function generateNotecardForm() {
     const form = document.createElement("form");
-    form.textContent = "hello form";
+    form.classList.add("pop-up");
+    form.classList.add("pop-up-active"); // change to inactive by default
+    form.setAttribute("id", formValidator.notecardFormID);
+
+    const formRow1 = document.createElement("div");
+    formRow1.classList.add("form-row");
+
+    const formItem1 = document.createElement("div");
+    formItem1.classList.add("form-item");
+
+    const titleLabel = document.createElement("label");
+    titleLabel.setAttribute("for", "title");
+    titleLabel.textContent = "Title";
+    formItem1.appendChild(titleLabel);
+
+    const titleInput = document.createElement("input");
+    titleInput.setAttribute("type", "text");
+    titleInput.setAttribute("id", "title");
+    titleInput.setAttribute("name", "title");
+    formItem1.appendChild(titleInput);
+
+    const titleInputErrorMessage = document.createElement("div");
+    titleInputErrorMessage.classList.add("input-error");
+    titleInputErrorMessage.classList.add("title-input-error");
+    titleInputErrorMessage.textContent = "";
+    formItem1.appendChild(titleInputErrorMessage);
+    formRow1.appendChild(formItem1);
+    form.appendChild(formRow1);
+
+    const formRow2 = document.createElement("div");
+    formRow2.classList.add("form-row");
+
+    const formItem2 = document.createElement("div");
+    formItem2.classList.add("form-item");
+
+    const descriptionLabel = document.createElement("label");
+    descriptionLabel.setAttribute("for", "description");
+    descriptionLabel.textContent = "Description";
+    formItem2.appendChild(descriptionLabel);
+
+    const descriptionInput = document.createElement("textarea");
+    descriptionInput.setAttribute("id", "description");
+    descriptionInput.setAttribute("name", "description");
+    formItem2.appendChild(descriptionInput);
+
+    const DescriptionInputErrorMessage = document.createElement("div");
+    DescriptionInputErrorMessage.classList.add("input-error");
+    DescriptionInputErrorMessage.classList.add("description-input-error");
+    DescriptionInputErrorMessage.textContent = "";
+    formItem2.appendChild(DescriptionInputErrorMessage);
+    formRow2.appendChild(formItem2);
+    form.appendChild(formRow2);
+
+    form.appendChild(generateCloseButton(form));
+
     return form;
   }
 
