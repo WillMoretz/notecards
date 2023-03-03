@@ -106,6 +106,13 @@ const formDOM = (() => {
     return container;
   }
 
+  function generateSubmitButton() {
+    const submitButton = document.createElement("button");
+    submitButton.setAttribute("type", "submit");
+    submitButton.textContent = "Submit";
+    return submitButton;
+  }
+
   function generateNotecardForm() {
     const form = document.createElement("form");
     form.classList.add("pop-up");
@@ -207,6 +214,12 @@ const formDOM = (() => {
     formRow4.appendChild(formItem4);
     form.appendChild(formRow4);
 
+    const formRow5 = document.createElement("div");
+    formRow5.classList.add("form-row");
+
+    formRow5.appendChild(generateSubmitButton());
+    form.appendChild(formRow5);
+
     form.appendChild(generateCloseButton(form));
 
     return form;
@@ -246,13 +259,7 @@ const formDOM = (() => {
     const formRow2 = document.createElement("div");
     formRow2.classList.add("form-row");
 
-    const submitButton = document.createElement("button");
-    submitButton.setAttribute("type", "submit");
-    submitButton.textContent = "Submit";
-    // submitButton.addEventListener("click", (e) => {
-
-    // });
-    formRow2.appendChild(submitButton);
+    formRow2.appendChild(generateSubmitButton());
     form.appendChild(formRow2);
 
     form.appendChild(generateCloseButton(form));
