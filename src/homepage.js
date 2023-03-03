@@ -273,7 +273,7 @@ const homepage = (() => {
     return homePage;
   }
 
-  return { generateHomePage, refreshSidebar };
+  return { generateHomePage, refreshSidebar, refreshBody, refreshTags };
 })();
 
 export default homepage;
