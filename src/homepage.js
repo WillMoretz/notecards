@@ -219,7 +219,6 @@ const homepage = (() => {
     subjectsLabel.classList.add(".subjects-label");
     subjectsLabel.textContent = "Subjects";
     sidebar.appendChild(subjectsLabel);
-    console.log(subjectsLabel);
 
     for (const subject of subjectList) {
       const button = document.createElement("button");
@@ -247,6 +246,15 @@ const homepage = (() => {
     return sidebar;
   }
 
+  function refreshSidebar(subjectList) {
+    document
+      .querySelector(".homepage")
+      .replaceChild(
+        generateSidebar(subjectList),
+        document.querySelector(".sidebar")
+      );
+  }
+
   function generateFooter() {
     const footer = document.createElement("div");
     footer.classList.add("footer");
@@ -265,7 +273,7 @@ const homepage = (() => {
     return homePage;
   }
 
-  return { generateHomePage };
+  return { generateHomePage, refreshSidebar };
 })();
 
 export default homepage;
