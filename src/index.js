@@ -99,7 +99,10 @@ document.addEventListener("submit", (e) => {
   e.preventDefault();
   const form = document.querySelector(".pop-up");
   if (form.id === formValidator.subjectFormID) {
-    formValidator.validateSubjectForm();
+    if (formValidator.validateSubjectForm()) {
+      homepage.refreshSidebar(subjectStorage.getSubjects());
+      formDOM.toggleDisplay(form);
+    }
   } else if (form.id === formValidator.notecardFormID) {
     formValidator.validateNotecardForm();
   }
