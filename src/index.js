@@ -80,19 +80,25 @@ const pageManager = (() => {
     );
   }
 
-  function initForm() {
+  function initSubjectForm() {
     PAGECONTAINER.appendChild(formDOM.generateSubjectForm());
+    PAGECONTAINER.appendChild(formDOM.generateOverlay());
+  }
+
+  function initNotecardForm() {
+    PAGECONTAINER.appendChild(formDOM.generateNotecardForm());
     PAGECONTAINER.appendChild(formDOM.generateOverlay());
   }
 
   return {
     initHomepage,
-    initForm,
+    initSubjectForm,
+    initNotecardForm,
   };
 })();
 
 pageManager.initHomepage();
-pageManager.initForm();
+pageManager.initNotecardForm();
 
 // Event Listeners that will interface with pageManager
 document.addEventListener("submit", (e) => {
