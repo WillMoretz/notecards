@@ -8,6 +8,8 @@ import {
 const formValidator = (() => {
   const subjectFormID = "subject-form";
   const notecardFormID = "notecard-form";
+  const titleCharMaxLength = 15;
+  const descriptionCharMaxLength = 400;
 
   function validateSubjectForm() {
     const subjectInput = document.querySelector("#subject");
@@ -15,9 +17,9 @@ const formValidator = (() => {
       ".subject-input-error"
     );
 
-    if (subjectInput.value.length > 14) {
+    if (subjectInput.value.length > 15) {
       subjectInputErrorMessage.textContent =
-        "Input must be less than 14 characters";
+        "Input must be less than 15 characters";
       return false;
     }
 
@@ -35,9 +37,8 @@ const formValidator = (() => {
     const titleInputErrorMessage = document.querySelector(".title-input-error");
 
     let titleValid = true;
-    if (titleInput.value.length > 14) {
-      titleInputErrorMessage.textContent =
-        "Input must be less than 14 characters";
+    if (titleInput.value.length > titleCharMaxLength) {
+      titleInputErrorMessage.textContent = `Input must be less than ${titleCharMaxLength} characters`;
       titleValid = false;
     }
 
@@ -60,9 +61,8 @@ const formValidator = (() => {
     );
 
     let descriptionValid = true;
-    if (descriptionInput.value.length > 400) {
-      descriptionInputErrorMessage.textContent =
-        "Input must be less than 400 characters";
+    if (descriptionInput.value.length > descriptionCharMaxLength) {
+      descriptionInputErrorMessage.textContent = `Input must be less than ${descriptionCharMaxLength} characters`;
       descriptionValid = false;
     }
 
@@ -96,9 +96,9 @@ const formValidator = (() => {
 
     let tagValid = true;
     tagsValues.forEach((value) => {
-      if (value.length > 14) {
+      if (value.length > 15) {
         tagInputErrorMessage.textContent =
-          "All tags must be less than 14 characters";
+          "All tags must be less than 15 characters";
         tagValid = false;
       }
       if (value.length === 0) {
@@ -133,6 +133,10 @@ const formValidator = (() => {
   return {
     validateSubjectForm,
     validateNotecardForm,
+    validateNotecardDescription,
+    validateNotecardTitle,
+    descriptionCharMaxLength,
+    titleCharMaxLength,
     subjectFormID,
     notecardFormID,
   };
@@ -231,16 +235,39 @@ const formDOM = (() => {
     titleLabel.textContent = "Title";
     formItem1.appendChild(titleLabel);
 
-    const titleInput = document.createElement("input");
-    titleInput.setAttribute("type", "text");
-    titleInput.setAttribute("id", "title");
-    titleInput.setAttribute("name", "title");
-    formItem1.appendChild(titleInput);
-
     const titleInputErrorMessage = document.createElement("div");
     titleInputErrorMessage.classList.add("input-error");
     titleInputErrorMessage.classList.add("title-input-error");
     titleInputErrorMessage.textContent = "";
+
+    const titleInput = document.createElement("input");
+    titleInput.setAttribute("type", "text");
+    titleInput.setAttribute("id", "title");
+    titleInput.setAttribute("name", "title");
+    titleInput.addEventListener("focusout", () => {
+      if (formValidator.validateNotecardTitle()) {
+        titleInput.classList.add("input-valid");
+        titleInput.classList.remove("input-invalid");
+        titleInputErrorMessage.textContent = "✓";
+      } else {
+        titleInput.classList.add("input-invalid");
+        titleInput.classList.remove("input-valid");
+      }
+    });
+    titleInput.addEventListener("keyup", () => {
+      titleInputErrorMessage.textContent = `${titleInput.value.length}/${formValidator.titleCharMaxLength}`;
+      if (
+        titleInput.value.length < formValidator.titleCharMaxLength &&
+        titleInput.value.length !== 0
+      ) {
+        titleInputErrorMessage.classList.add("error-valid");
+        titleInputErrorMessage.classList.remove("error-invalid");
+      } else {
+        titleInputErrorMessage.classList.add("error-invalid");
+        titleInputErrorMessage.classList.remove("error-valid");
+      }
+    });
+    formItem1.appendChild(titleInput);
     formItem1.appendChild(titleInputErrorMessage);
     formRow1.appendChild(formItem1);
     form.appendChild(formRow1);
@@ -256,16 +283,40 @@ const formDOM = (() => {
     descriptionLabel.textContent = "Description";
     formItem2.appendChild(descriptionLabel);
 
+    const descriptionInputErrorMessage = document.createElement("div");
+    descriptionInputErrorMessage.classList.add("input-error");
+    descriptionInputErrorMessage.classList.add("description-input-error");
+    descriptionInputErrorMessage.textContent = "";
+
     const descriptionInput = document.createElement("textarea");
     descriptionInput.setAttribute("id", "description");
     descriptionInput.setAttribute("name", "description");
+    descriptionInput.addEventListener("focusout", () => {
+      if (formValidator.validateNotecardDescription()) {
+        descriptionInput.classList.add("input-valid");
+        descriptionInput.classList.remove("input-invalid");
+        descriptionInputErrorMessage.textContent = "✓";
+      } else {
+        descriptionInput.classList.add("input-invalid");
+        descriptionInput.classList.remove("input-valid");
+      }
+    });
+    descriptionInput.addEventListener("keyup", () => {
+      descriptionInputErrorMessage.textContent = `${descriptionInput.value.length}/${formValidator.descriptionCharMaxLength}`;
+      if (
+        descriptionInput.value.length <
+          formValidator.descriptionCharMaxLength &&
+        descriptionInput.value.length !== 0
+      ) {
+        descriptionInputErrorMessage.classList.add("error-valid");
+        descriptionInputErrorMessage.classList.remove("error-invalid");
+      } else {
+        descriptionInputErrorMessage.classList.add("error-invalid");
+        descriptionInputErrorMessage.classList.remove("error-valid");
+      }
+    });
     formItem2.appendChild(descriptionInput);
-
-    const DescriptionInputErrorMessage = document.createElement("div");
-    DescriptionInputErrorMessage.classList.add("input-error");
-    DescriptionInputErrorMessage.classList.add("description-input-error");
-    DescriptionInputErrorMessage.textContent = "";
-    formItem2.appendChild(DescriptionInputErrorMessage);
+    formItem2.appendChild(descriptionInputErrorMessage);
     formRow2.appendChild(formItem2);
     form.appendChild(formRow2);
 
