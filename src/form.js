@@ -10,6 +10,7 @@ const formValidator = (() => {
   const notecardFormID = "notecard-form";
   const titleCharMaxLength = 15;
   const descriptionCharMaxLength = 400;
+  const subjectCharMaxLength = 15;
 
   function validateSubjectForm() {
     const subjectInput = document.querySelector("#subject");
@@ -17,9 +18,8 @@ const formValidator = (() => {
       ".subject-input-error"
     );
 
-    if (subjectInput.value.length > 15) {
-      subjectInputErrorMessage.textContent =
-        "Input must be less than 15 characters";
+    if (subjectInput.value.length > subjectCharMaxLength) {
+      subjectInputErrorMessage.textContent = `Input must be less than ${subjectCharMaxLength} characters`;
       return false;
     }
 
@@ -137,6 +137,7 @@ const formValidator = (() => {
     validateNotecardTitle,
     descriptionCharMaxLength,
     titleCharMaxLength,
+    subjectCharMaxLength,
     subjectFormID,
     notecardFormID,
   };
@@ -257,7 +258,7 @@ const formDOM = (() => {
     titleInput.addEventListener("keyup", () => {
       titleInputErrorMessage.textContent = `${titleInput.value.length}/${formValidator.titleCharMaxLength}`;
       if (
-        titleInput.value.length < formValidator.titleCharMaxLength &&
+        titleInput.value.length <= formValidator.titleCharMaxLength &&
         titleInput.value.length !== 0
       ) {
         titleInputErrorMessage.classList.add("error-valid");
@@ -304,7 +305,7 @@ const formDOM = (() => {
     descriptionInput.addEventListener("keyup", () => {
       descriptionInputErrorMessage.textContent = `${descriptionInput.value.length}/${formValidator.descriptionCharMaxLength}`;
       if (
-        descriptionInput.value.length <
+        descriptionInput.value.length <=
           formValidator.descriptionCharMaxLength &&
         descriptionInput.value.length !== 0
       ) {
@@ -401,16 +402,40 @@ const formDOM = (() => {
     subjectLabel.textContent = "New Subject";
     formItem.appendChild(subjectLabel);
 
-    const subjectInput = document.createElement("input");
-    subjectInput.setAttribute("type", "text");
-    subjectInput.setAttribute("id", "subject");
-    subjectInput.setAttribute("name", "subject");
-    formItem.appendChild(subjectInput);
-
     const subjectInputErrorMessage = document.createElement("div");
     subjectInputErrorMessage.classList.add("input-error");
     subjectInputErrorMessage.classList.add("subject-input-error");
     subjectInputErrorMessage.textContent = "";
+
+    const subjectInput = document.createElement("input");
+    subjectInput.setAttribute("type", "text");
+    subjectInput.setAttribute("id", "subject");
+    subjectInput.setAttribute("name", "subject");
+    subjectInput.addEventListener("focusout", () => {
+      if (formValidator.validateSubjectForm()) {
+        subjectInput.classList.add("input-valid");
+        subjectInput.classList.remove("input-invalid");
+        subjectInputErrorMessage.textContent = "✓";
+        console.log(subjectInputErrorMessage.textContent);
+      } else {
+        subjectInput.classList.add("input-invalid");
+        subjectInput.classList.remove("input-valid");
+      }
+    });
+    subjectInput.addEventListener("keyup", () => {
+      subjectInputErrorMessage.textContent = `${subjectInput.value.length}/${formValidator.subjectCharMaxLength}`;
+      if (
+        subjectInput.value.length <= formValidator.subjectCharMaxLength &&
+        subjectInput.value.length !== 0
+      ) {
+        subjectInputErrorMessage.classList.add("error-valid");
+        subjectInputErrorMessage.classList.remove("error-invalid");
+      } else {
+        subjectInputErrorMessage.classList.add("error-invalid");
+        subjectInputErrorMessage.classList.remove("error-valid");
+      }
+    });
+    formItem.appendChild(subjectInput);
     formItem.appendChild(subjectInputErrorMessage);
     formRow1.appendChild(formItem);
     form.appendChild(formRow1);
