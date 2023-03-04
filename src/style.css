@@ -104,7 +104,7 @@ select,
 
 textarea {
   resize: none;
-  height: calc(3rem + 7px);
+  height: calc(8rem + 7px);
 }
 
 .input-error {
@@ -297,6 +297,11 @@ button[type="submit"]:hover {
 
 .title {
   font-size: 2rem;
+}
+
+.description {
+  inline-size: 100%;
+  overflow-wrap: break-word;
 }
 
 .notecard-tags {
