@@ -30,25 +30,9 @@ const formValidator = (() => {
     return true;
   }
 
-  function validateNotecardForm() {
+  function validateNotecardTitle() {
     const titleInput = document.querySelector("#title");
     const titleInputErrorMessage = document.querySelector(".title-input-error");
-    const descriptionInput = document.querySelector("#description");
-    const descriptionInputErrorMessage = document.querySelector(
-      ".description-input-error"
-    );
-    const subjectInput = document.querySelector("#notecard-input-subject");
-    const tagsInput = document.querySelectorAll(".tag-input");
-    const tagInputErrorMessage = document.querySelector(".tag-input-error");
-
-    const tagsValues = [];
-    tagsInput.forEach((tag) => {
-      if (!tagsValues.includes(tag.value)) {
-        tagsValues.push(tag.value);
-      }
-    });
-
-    let valid = true;
 
     let titleValid = true;
     if (titleInput.value.length > 14) {
@@ -61,8 +45,19 @@ const formValidator = (() => {
       titleInputErrorMessage.textContent = "Please enter a title";
       titleValid = false;
     }
-    if (titleValid) titleInputErrorMessage.textContent = "";
-    else valid = false;
+
+    if (titleValid) {
+      titleInputErrorMessage.textContent = "";
+      return true;
+    }
+    return false;
+  }
+
+  function validateNotecardDescription() {
+    const descriptionInput = document.querySelector("#description");
+    const descriptionInputErrorMessage = document.querySelector(
+      ".description-input-error"
+    );
 
     let descriptionValid = true;
     if (descriptionInput.value.length > 400) {
@@ -75,8 +70,29 @@ const formValidator = (() => {
       descriptionInputErrorMessage.textContent = "Please enter a description";
       descriptionValid = false;
     }
-    if (descriptionValid) descriptionInputErrorMessage.textContent = "";
-    else valid = false;
+
+    if (descriptionValid) {
+      descriptionInputErrorMessage.textContent = "";
+      return true;
+    }
+    return false;
+  }
+
+  function validateNotecardForm() {
+    const subjectInput = document.querySelector("#notecard-input-subject");
+    const tagsInput = document.querySelectorAll(".tag-input");
+    const tagInputErrorMessage = document.querySelector(".tag-input-error");
+
+    const tagsValues = [];
+    tagsInput.forEach((tag) => {
+      if (!tagsValues.includes(tag.value)) {
+        tagsValues.push(tag.value);
+      }
+    });
+
+    let valid = true;
+    if (!validateNotecardTitle()) valid = false;
+    if (!validateNotecardDescription()) valid = false;
 
     let tagValid = true;
     tagsValues.forEach((value) => {
@@ -104,9 +120,9 @@ const formValidator = (() => {
 
     notecardStorage.addNotecard(
       notecard(
-        titleInput.value,
+        document.querySelector("#title").value,
         tagsValues,
-        descriptionInput.value,
+        document.querySelector("#description").value,
         subjectInput.value
       )
     );
