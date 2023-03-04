@@ -70,7 +70,7 @@ const pageManager = (() => {
       )
     );
 
-    resetPage();
+    // resetPage();
     PAGECONTAINER.appendChild(
       homepage.generateHomePage(
         subjectStorage.getSubjects(),
@@ -82,38 +82,47 @@ const pageManager = (() => {
 
   function initSubjectForm() {
     PAGECONTAINER.appendChild(formDOM.generateSubjectForm());
-    PAGECONTAINER.appendChild(formDOM.generateOverlay());
   }
 
   function initNotecardForm() {
     PAGECONTAINER.appendChild(formDOM.generateNotecardForm());
+  }
+
+  function initOverlay() {
     PAGECONTAINER.appendChild(formDOM.generateOverlay());
   }
 
+  function init() {
+    initHomepage();
+    initSubjectForm();
+    initNotecardForm();
+    initOverlay();
+  }
+
   return {
-    initHomepage,
-    initSubjectForm,
-    initNotecardForm,
+    init,
   };
 })();
 
-pageManager.initHomepage();
-pageManager.initNotecardForm();
+pageManager.init();
 
 // Event Listeners that will interface with pageManager
 document.addEventListener("submit", (e) => {
   e.preventDefault();
-  const form = document.querySelector(".pop-up");
-  if (form.id === formValidator.subjectFormID) {
+  if (
+    document.querySelector(".subject-form").classList.contains("pop-up-active")
+  ) {
     if (formValidator.validateSubjectForm()) {
       homepage.refreshSidebar(subjectStorage.getSubjects());
-      formDOM.toggleDisplay(form);
+      formDOM.toggleDisplay(document.querySelector(".subject-form"));
     }
-  } else if (form.id === formValidator.notecardFormID) {
+  } else if (
+    document.querySelector(".notecard-form").classList.contains("pop-up-active")
+  ) {
     if (formValidator.validateNotecardForm()) {
       homepage.refreshBody(notecardStorage.getAllNotecards());
       homepage.refreshTags(tagStorage.getTags());
-      formDOM.toggleDisplay(form);
+      formDOM.toggleDisplay(document.querySelector(".notecard-form"));
     }
   }
 });
