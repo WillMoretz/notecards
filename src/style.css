@@ -180,6 +180,11 @@ button[type="submit"]:hover {
   border-radius: 8px;
 }
 
+.nav {
+  display: flex;
+  gap: 4px;
+}
+
 .nav > button,
 .homepage > .tags > button {
   background-color: var(--body-background, lightgrey);
