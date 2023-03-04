@@ -1,4 +1,5 @@
 import { notecardStorage, tagStorage } from "./notecards";
+import { formDOM } from "./form";
 
 const notecardFilterer = (() => {
   function getSelectedSubject() {
@@ -93,6 +94,24 @@ const homepage = (() => {
 
     const nav = document.createElement("div");
     nav.classList.add("nav");
+
+    const addSubjectButton = document.createElement("button");
+    addSubjectButton.textContent = "Add Subject";
+
+    addSubjectButton.addEventListener("click", () => {
+      formDOM.toggleDisplay(document.querySelector(".subject-form"));
+    });
+
+    nav.appendChild(addSubjectButton);
+
+    const addNotecardButton = document.createElement("button");
+    addNotecardButton.textContent = "Add Notecard";
+
+    addNotecardButton.addEventListener("click", () => {
+      formDOM.toggleDisplay(document.querySelector(".notecard-form"));
+    });
+
+    nav.appendChild(addNotecardButton);
 
     const flipAllButton = document.createElement("button");
     flipAllButton.textContent = "Flip All";
