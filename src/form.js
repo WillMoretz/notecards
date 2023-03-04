@@ -65,9 +65,9 @@ const formValidator = (() => {
     else valid = false;
 
     let descriptionValid = true;
-    if (descriptionInput.value.length > 100) {
+    if (descriptionInput.value.length > 400) {
       descriptionInputErrorMessage.textContent =
-        "Input must be less than 100 characters";
+        "Input must be less than 400 characters";
       descriptionValid = false;
     }
 
