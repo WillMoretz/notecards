@@ -97,9 +97,24 @@ select,
   text-align: center;
 }
 
+.input-valid {
+  border: 2px solid green;
+}
+
+.input-invalid {
+  border: 2px solid red;
+}
+
 .add-tag,
 .remove-tag {
   font-weight: 600;
+}
+
+input[type="text"],
+textarea,
+select,
+#notecard-input-tag {
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 textarea {
@@ -113,6 +128,10 @@ textarea {
   font-style: italic;
   margin-top: 1px;
   min-height: 16px;
+}
+
+.error-valid {
+  color: green;
 }
 
 button[type="submit"] {
