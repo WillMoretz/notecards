@@ -99,7 +99,9 @@ const homepage = (() => {
     addSubjectButton.textContent = "Add Subject";
 
     addSubjectButton.addEventListener("click", () => {
-      formDOM.toggleDisplay(document.querySelector(".subject-form"));
+      const container = document.querySelector("#content");
+      container.appendChild(formDOM.generateSubjectForm());
+      container.appendChild(formDOM.generateOverlay());
     });
 
     nav.appendChild(addSubjectButton);
@@ -108,7 +110,9 @@ const homepage = (() => {
     addNotecardButton.textContent = "Add Notecard";
 
     addNotecardButton.addEventListener("click", () => {
-      formDOM.toggleDisplay(document.querySelector(".notecard-form"));
+      const container = document.querySelector("#content");
+      container.appendChild(formDOM.generateNotecardForm());
+      container.appendChild(formDOM.generateOverlay());
     });
 
     nav.appendChild(addNotecardButton);

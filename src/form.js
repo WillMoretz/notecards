@@ -181,24 +181,29 @@ const formDOM = (() => {
   function generateOverlay() {
     const overlay = document.createElement("div");
     overlay.classList.add("pop-up-overlay");
-    overlay.classList.add("pop-up-overlay-inactive");
+    overlay.classList.add("pop-up-overlay-active");
 
     return overlay;
   }
 
-  function toggleDisplay(popUp) {
-    const overlay = document.querySelector(".pop-up-overlay");
-    if (popUp.classList.contains("pop-up-active")) {
-      popUp.classList.remove("pop-up-active");
-      popUp.classList.add("pop-up-inactive");
-      overlay.classList.remove("pop-up-overlay-active");
-      overlay.classList.add("pop-up-overlay-inactive");
-    } else {
-      popUp.classList.remove("pop-up-inactive");
-      popUp.classList.add("pop-up-active");
-      overlay.classList.remove("pop-up-overlay-inactive");
-      overlay.classList.add("pop-up-overlay-active");
-    }
+  // function toggleDisplay(popUp) {
+  //   const overlay = document.querySelector(".pop-up-overlay");
+  //   if (popUp.classList.contains("pop-up-active")) {
+  //     popUp.classList.remove("pop-up-active");
+  //     popUp.classList.add("pop-up-inactive");
+  //     overlay.classList.remove("pop-up-overlay-active");
+  //     overlay.classList.add("pop-up-overlay-inactive");
+  //   } else {
+  //     popUp.classList.remove("pop-up-inactive");
+  //     popUp.classList.add("pop-up-active");
+  //     overlay.classList.remove("pop-up-overlay-inactive");
+  //     overlay.classList.add("pop-up-overlay-active");
+  //   }
+  // }
+
+  function removeForm(popUp) {
+    popUp.remove();
+    document.querySelector(".pop-up-overlay").remove();
   }
 
   function generateCloseButton(form) {
@@ -207,7 +212,7 @@ const formDOM = (() => {
     closeButton.classList.add("pop-up-close");
     closeButton.textContent = "X";
     closeButton.addEventListener("click", () => {
-      toggleDisplay(form);
+      removeForm(form);
     });
 
     return closeButton;
@@ -256,8 +261,7 @@ const formDOM = (() => {
   function generateNotecardForm() {
     const form = document.createElement("form");
     form.classList.add("pop-up");
-    form.classList.add("pop-up-inactive");
-    form.classList.add("notecard-form");
+    form.classList.add("pop-up-active");
     form.setAttribute("id", formValidator.notecardFormID);
 
     const formRow1 = document.createElement("div");
@@ -422,8 +426,7 @@ const formDOM = (() => {
   function generateSubjectForm() {
     const form = document.createElement("form");
     form.classList.add("pop-up");
-    form.classList.add("pop-up-inactive");
-    form.classList.add("subject-form");
+    form.classList.add("pop-up-active");
     form.setAttribute("id", formValidator.subjectFormID);
 
     const formRow1 = document.createElement("div");
@@ -494,7 +497,7 @@ const formDOM = (() => {
     generateNotecardForm,
     generateSubjectForm,
     generateOverlay,
-    toggleDisplay,
+    removeForm,
   };
 })();
 
