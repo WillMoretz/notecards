@@ -181,7 +181,7 @@ const formDOM = (() => {
   function generateOverlay() {
     const overlay = document.createElement("div");
     overlay.classList.add("pop-up-overlay");
-    overlay.classList.add("pop-up-overlay-active"); // change to inactive by default
+    overlay.classList.add("pop-up-overlay-inactive");
 
     return overlay;
   }
@@ -256,7 +256,8 @@ const formDOM = (() => {
   function generateNotecardForm() {
     const form = document.createElement("form");
     form.classList.add("pop-up");
-    form.classList.add("pop-up-active"); // change to inactive by default
+    form.classList.add("pop-up-inactive");
+    form.classList.add("notecard-form");
     form.setAttribute("id", formValidator.notecardFormID);
 
     const formRow1 = document.createElement("div");
@@ -421,7 +422,8 @@ const formDOM = (() => {
   function generateSubjectForm() {
     const form = document.createElement("form");
     form.classList.add("pop-up");
-    form.classList.add("pop-up-active"); // change to inactive by default
+    form.classList.add("pop-up-inactive");
+    form.classList.add("subject-form");
     form.setAttribute("id", formValidator.subjectFormID);
 
     const formRow1 = document.createElement("div");
