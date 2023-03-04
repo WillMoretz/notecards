@@ -12,18 +12,28 @@ const formValidator = (() => {
   const descriptionCharMaxLength = 400;
   const subjectCharMaxLength = 15;
 
+  function validateSubjectLength() {
+    const subjectInput = document.querySelector("#subject");
+    return subjectInput.value.length > subjectCharMaxLength;
+  }
+
+  function validateSubjectInputted() {
+    const subjectInput = document.querySelector("#subject");
+    return subjectInput.value.length === 0;
+  }
+
   function validateSubjectForm() {
     const subjectInput = document.querySelector("#subject");
     const subjectInputErrorMessage = document.querySelector(
       ".subject-input-error"
     );
 
-    if (subjectInput.value.length > subjectCharMaxLength) {
+    if (validateSubjectLength()) {
       subjectInputErrorMessage.textContent = `Input must be less than ${subjectCharMaxLength} characters`;
       return false;
     }
 
-    if (subjectInput.value.length === 0) {
+    if (validateSubjectInputted()) {
       subjectInputErrorMessage.textContent = "Please enter a subject";
       return false;
     }
@@ -32,17 +42,27 @@ const formValidator = (() => {
     return true;
   }
 
+  function validateTitleLength() {
+    const titleInput = document.querySelector("#title");
+    return titleInput.value.length > titleCharMaxLength;
+  }
+
+  function validateTitleInputted() {
+    const titleInput = document.querySelector("#title");
+    return titleInput.value.length === 0;
+  }
+
   function validateNotecardTitle() {
     const titleInput = document.querySelector("#title");
     const titleInputErrorMessage = document.querySelector(".title-input-error");
 
     let titleValid = true;
-    if (titleInput.value.length > titleCharMaxLength) {
+    if (validateTitleLength()) {
       titleInputErrorMessage.textContent = `Input must be less than ${titleCharMaxLength} characters`;
       titleValid = false;
     }
 
-    if (titleInput.value.length === 0) {
+    if (validateTitleInputted()) {
       titleInputErrorMessage.textContent = "Please enter a title";
       titleValid = false;
     }
@@ -54,6 +74,16 @@ const formValidator = (() => {
     return false;
   }
 
+  function validateDescriptionLength() {
+    const descriptionInput = document.querySelector("#description");
+    return descriptionInput.value.length > descriptionCharMaxLength;
+  }
+
+  function validateDescriptionInputted() {
+    const descriptionInput = document.querySelector("#description");
+    return descriptionInput.value.length === 0;
+  }
+
   function validateNotecardDescription() {
     const descriptionInput = document.querySelector("#description");
     const descriptionInputErrorMessage = document.querySelector(
@@ -61,12 +91,12 @@ const formValidator = (() => {
     );
 
     let descriptionValid = true;
-    if (descriptionInput.value.length > descriptionCharMaxLength) {
+    if (validateDescriptionLength()) {
       descriptionInputErrorMessage.textContent = `Input must be less than ${descriptionCharMaxLength} characters`;
       descriptionValid = false;
     }
 
-    if (descriptionInput.value.length === 0) {
+    if (validateDescriptionInputted()) {
       descriptionInputErrorMessage.textContent = "Please enter a description";
       descriptionValid = false;
     }
@@ -135,6 +165,12 @@ const formValidator = (() => {
     validateNotecardForm,
     validateNotecardDescription,
     validateNotecardTitle,
+    validateSubjectLength,
+    validateSubjectInputted,
+    validateTitleLength,
+    validateTitleInputted,
+    validateDescriptionLength,
+    validateDescriptionInputted,
     descriptionCharMaxLength,
     titleCharMaxLength,
     subjectCharMaxLength,
@@ -258,8 +294,8 @@ const formDOM = (() => {
     titleInput.addEventListener("keyup", () => {
       titleInputErrorMessage.textContent = `${titleInput.value.length}/${formValidator.titleCharMaxLength}`;
       if (
-        titleInput.value.length <= formValidator.titleCharMaxLength &&
-        titleInput.value.length !== 0
+        !formValidator.validateTitleLength() &&
+        !formValidator.validateTitleInputted()
       ) {
         titleInputErrorMessage.classList.add("error-valid");
         titleInputErrorMessage.classList.remove("error-invalid");
@@ -305,9 +341,8 @@ const formDOM = (() => {
     descriptionInput.addEventListener("keyup", () => {
       descriptionInputErrorMessage.textContent = `${descriptionInput.value.length}/${formValidator.descriptionCharMaxLength}`;
       if (
-        descriptionInput.value.length <=
-          formValidator.descriptionCharMaxLength &&
-        descriptionInput.value.length !== 0
+        !formValidator.validateDescriptionLength() &&
+        !formValidator.validateDescriptionInputted()
       ) {
         descriptionInputErrorMessage.classList.add("error-valid");
         descriptionInputErrorMessage.classList.remove("error-invalid");
@@ -412,11 +447,15 @@ const formDOM = (() => {
     subjectInput.setAttribute("id", "subject");
     subjectInput.setAttribute("name", "subject");
     subjectInput.addEventListener("focusout", () => {
-      if (formValidator.validateSubjectForm()) {
+      console.log(!formValidator.validateSubjectLength());
+      console.log(!formValidator.validateSubjectInputted());
+      if (
+        !formValidator.validateSubjectLength() &&
+        !formValidator.validateSubjectInputted()
+      ) {
         subjectInput.classList.add("input-valid");
         subjectInput.classList.remove("input-invalid");
         subjectInputErrorMessage.textContent = "✓";
-        console.log(subjectInputErrorMessage.textContent);
       } else {
         subjectInput.classList.add("input-invalid");
         subjectInput.classList.remove("input-valid");
