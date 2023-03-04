@@ -48,39 +48,51 @@ const formValidator = (() => {
       }
     });
 
+    let valid = true;
+
+    let titleValid = true;
     if (titleInput.value.length > 14) {
       titleInputErrorMessage.textContent =
         "Input must be less than 14 characters";
-      return false;
+      titleValid = false;
     }
 
     if (titleInput.value.length === 0) {
       titleInputErrorMessage.textContent = "Please enter a title";
-      return false;
+      titleValid = false;
     }
-    titleInputErrorMessage.textContent = "";
+    if (titleValid) titleInputErrorMessage.textContent = "";
+    else valid = false;
 
+    let descriptionValid = true;
     if (descriptionInput.value.length > 100) {
       descriptionInputErrorMessage.textContent =
         "Input must be less than 100 characters";
-      return false;
+      descriptionValid = false;
     }
 
     if (descriptionInput.value.length === 0) {
       descriptionInputErrorMessage.textContent = "Please enter a description";
-      return false;
+      descriptionValid = false;
     }
-    descriptionInputErrorMessage.textContent = "";
+    if (descriptionValid) descriptionInputErrorMessage.textContent = "";
+    else valid = false;
 
-    let noTagError = true;
+    let tagValid = true;
     tagsValues.forEach((value) => {
       if (value.length > 14) {
         tagInputErrorMessage.textContent =
           "All tags must be less than 14 characters";
-        noTagError = false;
+        tagValid = false;
+      }
+      if (value.length === 0) {
+        tagInputErrorMessage.textContent = "Please enter a value for all tags";
+        tagValid = false;
       }
     });
-    if (!noTagError) return false;
+    if (!tagValid) valid = false;
+
+    if (!valid) return false;
 
     tagInputErrorMessage.textContent = "";
 
@@ -281,7 +293,7 @@ const formDOM = (() => {
     addTagInput.setAttribute("type", "button");
     addTagInput.textContent = "+";
     addTagInput.addEventListener("click", () => {
-      if (document.querySelectorAll(".tag-input-container").length > 9) return;
+      if (document.querySelectorAll(".tag-input-container").length > 5) return;
       formItem4.insertBefore(generateTagInput(), addTagInput);
     });
     formItem4.appendChild(addTagInput);
