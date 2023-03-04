@@ -9,7 +9,7 @@ const formValidator = (() => {
   const subjectFormID = "subject-form";
   const notecardFormID = "notecard-form";
   const titleCharMaxLength = 15;
-  const descriptionCharMaxLength = 400;
+  const descriptionCharMaxLength = 350;
   const subjectCharMaxLength = 15;
 
   function validateSubjectLength() {
@@ -53,7 +53,6 @@ const formValidator = (() => {
   }
 
   function validateNotecardTitle() {
-    const titleInput = document.querySelector("#title");
     const titleInputErrorMessage = document.querySelector(".title-input-error");
 
     let titleValid = true;
@@ -85,7 +84,6 @@ const formValidator = (() => {
   }
 
   function validateNotecardDescription() {
-    const descriptionInput = document.querySelector("#description");
     const descriptionInputErrorMessage = document.querySelector(
       ".description-input-error"
     );
