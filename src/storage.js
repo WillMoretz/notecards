@@ -19,7 +19,9 @@ const storer = (() => {
   }
 
   function store(tagList, subjectList, notecardList) {
+    const visitStatus = localStorage.getItem("firstVisit");
     localStorage.clear();
+    localStorage.setItem("firstVisit", visitStatus);
     storeTags(tagList);
     storeSubjects(subjectList);
     storeNotecards(notecardList);
