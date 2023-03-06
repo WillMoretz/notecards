@@ -153,23 +153,14 @@ const homepage = (() => {
       const notecardBack = document.createElement("div");
       notecardBack.classList.add("notecard-back");
 
-      // const description = document.createElement("div");
-      // description.classList.add("description");
-      // description.textContent = card.content;
-      // notecardBack.appendChild(description);
-
-      const optionsButton = document.createElement("button");
-      optionsButton.classList.add("notecard-back-button");
-      optionsButton.textContent = "☰";
-      optionsButton.addEventListener("click", (e) => {
-        e.stopPropagation();
-        if (optionsButton.textContent === "☰") optionsButton.textContent = "x";
-        else optionsButton.textContent = "☰";
-      });
-      notecardBack.appendChild(optionsButton);
+      const description = document.createElement("div");
+      description.classList.add("description");
+      description.textContent = card.content;
+      notecardBack.appendChild(description);
 
       const notecardOptions = document.createElement("div");
       notecardOptions.classList.add("notecard-back-options");
+      notecardOptions.style.display = "none";
 
       const tags = document.createElement("div");
       tags.classList.add("notecard-tags");
@@ -179,15 +170,34 @@ const homepage = (() => {
       const editNotecardButton = document.createElement("button");
       editNotecardButton.classList.add("edit-notecard-button");
       editNotecardButton.textContent = "Edit";
-      editNotecardButton.addEventListener("click", () => {
+      editNotecardButton.addEventListener("click", (e) => {
+        e.stopPropagation();
         console.log("hello");
       });
       notecardOptions.appendChild(editNotecardButton);
 
+      const optionsButton = document.createElement("button");
+      optionsButton.classList.add("notecard-back-button");
+      optionsButton.textContent = "☰";
+      optionsButton.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (optionsButton.textContent === "☰") {
+          optionsButton.textContent = "x";
+          description.style.display = "none";
+          notecardOptions.style.display = "block";
+        } else {
+          optionsButton.textContent = "☰";
+          description.style.display = "block";
+          notecardOptions.style.display = "none";
+        }
+      });
+      notecardBack.appendChild(optionsButton);
+
       const removeNotecardButton = document.createElement("button");
       removeNotecardButton.classList.add("remove-notecard-button");
       removeNotecardButton.textContent = "Remove";
-      removeNotecardButton.addEventListener("click", () => {
+      removeNotecardButton.addEventListener("click", (e) => {
+        e.stopPropagation();
         console.log("hello");
       });
       notecardOptions.appendChild(removeNotecardButton);
