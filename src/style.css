@@ -332,6 +332,9 @@ button[type="submit"]:hover {
 
 .notecard-tags {
   font-style: italic;
+  text-align: center;
+  position: relative;
+  right: 8px;
 }
 
 .remove-notecard-button,
