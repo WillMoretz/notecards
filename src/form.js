@@ -22,6 +22,14 @@ const formValidator = (() => {
     return subjectInput.value.length === 0;
   }
 
+  function validateSubjectDuplicates() {
+    const subjectInput = document.querySelector("#subject");
+    for (const subject of subjectStorage.getSubjects()) {
+      if (subjectInput.value === subject) return true;
+    }
+    return false;
+  }
+
   function validateSubjectForm() {
     const subjectInput = document.querySelector("#subject");
     const subjectInputErrorMessage = document.querySelector(
@@ -35,6 +43,11 @@ const formValidator = (() => {
 
     if (validateSubjectInputted()) {
       subjectInputErrorMessage.textContent = "Please enter a subject";
+      return false;
+    }
+
+    if (validateSubjectDuplicates()) {
+      subjectInputErrorMessage.textContent = "Subject already exists";
       return false;
     }
 
@@ -165,6 +178,7 @@ const formValidator = (() => {
     validateNotecardTitle,
     validateSubjectLength,
     validateSubjectInputted,
+    validateSubjectDuplicates,
     validateTitleLength,
     validateTitleInputted,
     validateDescriptionLength,
@@ -432,11 +446,10 @@ const formDOM = (() => {
     subjectInput.setAttribute("id", "subject");
     subjectInput.setAttribute("name", "subject");
     subjectInput.addEventListener("focusout", () => {
-      console.log(!formValidator.validateSubjectLength());
-      console.log(!formValidator.validateSubjectInputted());
       if (
         !formValidator.validateSubjectLength() &&
-        !formValidator.validateSubjectInputted()
+        !formValidator.validateSubjectInputted() &&
+        !formValidator.validateSubjectDuplicates()
       ) {
         subjectInput.classList.add("input-valid");
         subjectInput.classList.remove("input-invalid");
@@ -447,10 +460,15 @@ const formDOM = (() => {
       }
     });
     subjectInput.addEventListener("keyup", () => {
-      subjectInputErrorMessage.textContent = `${subjectInput.value.length}/${formValidator.subjectCharMaxLength}`;
+      if (!formValidator.validateSubjectDuplicates()) {
+        subjectInputErrorMessage.textContent = `${subjectInput.value.length}/${formValidator.subjectCharMaxLength}`;
+      } else {
+        subjectInputErrorMessage.textContent = "Subject already exists";
+      }
       if (
-        subjectInput.value.length <= formValidator.subjectCharMaxLength &&
-        subjectInput.value.length !== 0
+        !formValidator.validateSubjectLength() &&
+        !formValidator.validateSubjectInputted() &&
+        !formValidator.validateSubjectDuplicates()
       ) {
         subjectInputErrorMessage.classList.add("error-valid");
         subjectInputErrorMessage.classList.remove("error-invalid");
