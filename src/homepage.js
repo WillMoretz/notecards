@@ -1,5 +1,6 @@
 import { notecardStorage, tagStorage } from "./notecards";
 import { formDOM } from "./form";
+import { storer } from "./storage";
 
 const notecardFilterer = (() => {
   function getSelectedSubject() {
@@ -182,7 +183,7 @@ const homepage = (() => {
       optionsButton.addEventListener("click", (e) => {
         e.stopPropagation();
         if (optionsButton.textContent === "☰") {
-          optionsButton.textContent = "x";
+          optionsButton.textContent = "X";
           description.style.display = "none";
           notecardOptions.style.display = "block";
         } else {
@@ -198,7 +199,9 @@ const homepage = (() => {
       removeNotecardButton.textContent = "Remove";
       removeNotecardButton.addEventListener("click", (e) => {
         e.stopPropagation();
-        console.log("hello");
+        notecardStorage.removeNotecard(card);
+        notecardContainer.remove();
+        storer.store();
       });
       notecardOptions.appendChild(removeNotecardButton);
 
