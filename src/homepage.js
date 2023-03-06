@@ -158,6 +158,16 @@ const homepage = (() => {
       description.textContent = card.content;
       notecardBack.appendChild(description);
 
+      const optionsButton = document.createElement("button");
+      optionsButton.classList.add("notecard-back-options");
+      optionsButton.textContent = "☰";
+      optionsButton.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (optionsButton.textContent === "☰") optionsButton.textContent = "x";
+        else optionsButton.textContent = "☰";
+      });
+      notecardBack.appendChild(optionsButton);
+
       const tags = document.createElement("div");
       tags.classList.add("notecard-tags");
       tags.textContent = card.tags.join(" | ");
