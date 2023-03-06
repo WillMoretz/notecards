@@ -18,7 +18,6 @@ const pageManager = (() => {
   }
 
   function addDummyContent() {
-    console.log("dummy content function ran");
     // Dummy Content
     subjectStorage.addSubject("english");
     subjectStorage.addSubject("math");
@@ -71,6 +70,7 @@ const pageManager = (() => {
   }
 
   function initHomepage() {
+    console.log(localStorage);
     // retrieve any saved notecards from local storage
     const storedValues = restorer.restore();
     // add retrieved content
@@ -87,11 +87,11 @@ const pageManager = (() => {
     }
 
     // Add dummy content if its the first visit
-    console.log(localStorage.getItem("firstVisit"));
     if (localStorage.getItem("firstVisit") === null) {
       addDummyContent();
       localStorage.setItem("firstVisit", false);
     }
+    // addDummyContent();
 
     resetPage();
     PAGECONTAINER.appendChild(
@@ -111,14 +111,6 @@ const pageManager = (() => {
 pageManager.initHomepage();
 
 // Event Listeners that will interface with pageManager
-window.addEventListener("beforeunload", () => {
-  storer.store(
-    tagStorage.getTags(),
-    subjectStorage.getSubjects(),
-    notecardStorage.getAllNotecards()
-  );
-});
-
 document.addEventListener("submit", (e) => {
   e.preventDefault();
   const form = document.querySelector(".pop-up");
@@ -126,22 +118,14 @@ document.addEventListener("submit", (e) => {
     if (formValidator.validateSubjectForm()) {
       homepage.refreshSidebar(subjectStorage.getSubjects());
       formDOM.removeForm(form);
-      storer.store(
-        tagStorage.getTags(),
-        subjectStorage.getSubjects(),
-        notecardStorage.getAllNotecards()
-      );
+      storer.store();
     }
   } else if (form.id === formValidator.notecardFormID) {
     if (formValidator.validateNotecardForm()) {
       homepage.refreshBody(notecardStorage.getAllNotecards());
       homepage.refreshTags(tagStorage.getTags());
       formDOM.removeForm(form);
-      storer.store(
-        tagStorage.getTags(),
-        subjectStorage.getSubjects(),
-        notecardStorage.getAllNotecards()
-      );
+      storer.store();
     }
   }
 });
