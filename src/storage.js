@@ -1,30 +1,35 @@
+import { notecardStorage, tagStorage, subjectStorage } from "./notecards";
+
 const storer = (() => {
-  function storeNotecards(notecardList) {
+  function storeNotecards() {
+    const notecardList = notecardStorage.getAllNotecards();
     for (let i = 0; i < notecardList.length; i += 1) {
       const card = JSON.stringify(notecardList[i]);
       localStorage.setItem(`notecard${i}`, card);
     }
   }
 
-  function storeSubjects(subjectList) {
+  function storeSubjects() {
+    const subjectList = subjectStorage.getSubjects();
     for (let i = 0; i < subjectList.length; i += 1) {
       localStorage.setItem(`subject${i}`, subjectList[i]);
     }
   }
 
-  function storeTags(tagList) {
+  function storeTags() {
+    const tagList = tagStorage.getTags();
     for (let i = 0; i < tagList.length; i += 1) {
       localStorage.setItem(`tag${i}`, tagList[i]);
     }
   }
 
-  function store(tagList, subjectList, notecardList) {
+  function store() {
     const visitStatus = localStorage.getItem("firstVisit");
     localStorage.clear();
     localStorage.setItem("firstVisit", visitStatus);
-    storeTags(tagList);
-    storeSubjects(subjectList);
-    storeNotecards(notecardList);
+    storeTags();
+    storeSubjects();
+    storeNotecards();
   }
 
   return { store };
