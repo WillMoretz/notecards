@@ -43,20 +43,12 @@ const notecardStorage = (() => {
 
 // notecard factory function
 // returns a new notecard
-const notecard = (title, tags, content, subject) => {
-  function addTag(newTag) {
-    tags.push(newTag);
-  }
-  function removeTag(tag) {
-    const index = tags.indexOf(tag);
-    tags.splice(index, 1);
-  }
-
-  return { title, tags, content, subject, addTag, removeTag };
-};
-
-// localstorage (probably should be its own module)
-// function that stores a notecard object and a function that returns a notecard object out of storage
+const notecard = (title, tags, content, subject) => ({
+  title,
+  tags,
+  content,
+  subject,
+});
 
 // subjectStorage Module Pattern
 // will store subjects. Will add and delete subjects
