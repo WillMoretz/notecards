@@ -6,6 +6,7 @@ import {
   notecard,
 } from "./notecards";
 import { formDOM, formValidator } from "./form";
+import { storer, restorer } from "./storage";
 
 // pageManager module pattern
 // will call DOM functions and functions defined above
@@ -16,10 +17,8 @@ const pageManager = (() => {
     PAGECONTAINER.textContent = "";
   }
 
-  function initHomepage() {
-    // retrieve any saved notecards from local storage
-    // store retrieved content
-
+  function addDummyContent() {
+    console.log("dummy content function ran");
     // Dummy Content
     subjectStorage.addSubject("english");
     subjectStorage.addSubject("math");
@@ -69,6 +68,30 @@ const pageManager = (() => {
         "history"
       )
     );
+  }
+
+  function initHomepage() {
+    // retrieve any saved notecards from local storage
+    const storedValues = restorer.restore();
+    // add retrieved content
+    for (const subject of storedValues.subjectList) {
+      subjectStorage.addSubject(subject);
+    }
+
+    for (const tag of storedValues.tagList) {
+      tagStorage.addTag(tag);
+    }
+
+    for (const card of storedValues.notecardList) {
+      notecardStorage.addNotecard(card);
+    }
+
+    // Add dummy content if its the first visit
+    console.log(localStorage.getItem("firstVisit"));
+    if (localStorage.getItem("firstVisit") === null) {
+      addDummyContent();
+      localStorage.setItem("firstVisit", false);
+    }
 
     resetPage();
     PAGECONTAINER.appendChild(
@@ -88,6 +111,14 @@ const pageManager = (() => {
 pageManager.initHomepage();
 
 // Event Listeners that will interface with pageManager
+window.addEventListener("beforeunload", () => {
+  storer.store(
+    tagStorage.getTags(),
+    subjectStorage.getSubjects(),
+    notecardStorage.getAllNotecards()
+  );
+});
+
 document.addEventListener("submit", (e) => {
   e.preventDefault();
   const form = document.querySelector(".pop-up");
