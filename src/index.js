@@ -126,12 +126,22 @@ document.addEventListener("submit", (e) => {
     if (formValidator.validateSubjectForm()) {
       homepage.refreshSidebar(subjectStorage.getSubjects());
       formDOM.removeForm(form);
+      storer.store(
+        tagStorage.getTags(),
+        subjectStorage.getSubjects(),
+        notecardStorage.getAllNotecards()
+      );
     }
   } else if (form.id === formValidator.notecardFormID) {
     if (formValidator.validateNotecardForm()) {
       homepage.refreshBody(notecardStorage.getAllNotecards());
       homepage.refreshTags(tagStorage.getTags());
       formDOM.removeForm(form);
+      storer.store(
+        tagStorage.getTags(),
+        subjectStorage.getSubjects(),
+        notecardStorage.getAllNotecards()
+      );
     }
   }
 });
