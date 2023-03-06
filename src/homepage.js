@@ -153,13 +153,13 @@ const homepage = (() => {
       const notecardBack = document.createElement("div");
       notecardBack.classList.add("notecard-back");
 
-      const description = document.createElement("div");
-      description.classList.add("description");
-      description.textContent = card.content;
-      notecardBack.appendChild(description);
+      // const description = document.createElement("div");
+      // description.classList.add("description");
+      // description.textContent = card.content;
+      // notecardBack.appendChild(description);
 
       const optionsButton = document.createElement("button");
-      optionsButton.classList.add("notecard-back-options");
+      optionsButton.classList.add("notecard-back-button");
       optionsButton.textContent = "☰";
       optionsButton.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -168,10 +168,31 @@ const homepage = (() => {
       });
       notecardBack.appendChild(optionsButton);
 
+      const notecardOptions = document.createElement("div");
+      notecardOptions.classList.add("notecard-back-options");
+
       const tags = document.createElement("div");
       tags.classList.add("notecard-tags");
-      tags.textContent = card.tags.join(" | ");
-      notecardBack.appendChild(tags);
+      tags.textContent = card.tags.join(", ");
+      notecardOptions.appendChild(tags);
+
+      const editNotecardButton = document.createElement("button");
+      editNotecardButton.classList.add("edit-notecard-button");
+      editNotecardButton.textContent = "Edit";
+      editNotecardButton.addEventListener("click", () => {
+        console.log("hello");
+      });
+      notecardOptions.appendChild(editNotecardButton);
+
+      const removeNotecardButton = document.createElement("button");
+      removeNotecardButton.classList.add("remove-notecard-button");
+      removeNotecardButton.textContent = "Remove";
+      removeNotecardButton.addEventListener("click", () => {
+        console.log("hello");
+      });
+      notecardOptions.appendChild(removeNotecardButton);
+
+      notecardBack.appendChild(notecardOptions);
       notecardInner.appendChild(notecardBack);
 
       notecardInner.addEventListener("click", () => {
