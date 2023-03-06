@@ -319,6 +319,17 @@ button[type="submit"]:hover {
   overflow-wrap: break-word;
 }
 
+.notecard-back-options {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  background-color: var(--light, white);
+  border: none;
+  padding: 0 12px 0 10px;
+}
+
 .notecard-tags {
   position: absolute;
   top: 0;
