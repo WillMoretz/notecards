@@ -1,12 +1,10 @@
-import {
-  notecardStorage,
-  subjectStorage,
-  tagStorage,
-  notecard,
-} from "./notecards";
-
 const storer = (() => {
-  function storeNotecards() {}
+  function storeNotecards(notecardList) {
+    for (let i = 0; i < notecardList.length; i += 1) {
+      const card = JSON.stringify(notecardList[i]);
+      localStorage.setItem(`notecard${i}`, card);
+    }
+  }
 
   function storeSubjects(subjectList) {
     for (let i = 0; i < subjectList.length; i += 1) {
@@ -20,16 +18,29 @@ const storer = (() => {
     }
   }
 
-  function store(tagList, subjectList) {
+  function store(tagList, subjectList, notecardList) {
+    localStorage.clear();
     storeTags(tagList);
     storeSubjects(subjectList);
+    storeNotecards(notecardList);
   }
 
   return { store };
 })();
 
 const restorer = (() => {
-  function restoreNotecards() {}
+  function restoreNotecards() {
+    const notecardList = [];
+    let i = 0;
+    while (true) {
+      const item = localStorage.getItem(`notecard${i}`);
+      if (item !== null) {
+        notecardList.push(JSON.parse(item));
+        i += 1;
+      } else break;
+    }
+    return notecardList;
+  }
 
   function restoreSubjects() {
     const subjectList = [];
@@ -58,7 +69,10 @@ const restorer = (() => {
   }
 
   function restore() {
-    console.log("restore function ran");
+    const tagList = restoreTags();
+    const subjectList = restoreSubjects();
+    const notecardList = restoreNotecards();
+    return { tagList, subjectList, notecardList };
   }
 
   return { restore };
