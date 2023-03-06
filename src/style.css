@@ -319,7 +319,7 @@ button[type="submit"]:hover {
   overflow-wrap: break-word;
 }
 
-.notecard-back-options {
+.notecard-back-button {
   position: absolute;
   bottom: 0;
   right: 0;
@@ -331,10 +331,25 @@ button[type="submit"]:hover {
 }
 
 .notecard-tags {
-  position: absolute;
-  top: 0;
-  font-size: 0.75rem;
   font-style: italic;
+}
+
+.remove-notecard-button,
+.edit-notecard-button {
+  padding: 12px 32px 12px 32px;
+  margin: 8px;
+  background-color: var(--sidebar-background, darkblue);
+  color: var(--light, white);
+  font-size: 1.25rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 16px;
+}
+
+.remove-notecard-button:hover,
+.edit-notecard-button:hover {
+  color: var(--highlight, pink);
+  box-shadow: 3px 3px rgba(0, 0, 0, 0.12);
 }
 
 .homepage > .footer {
