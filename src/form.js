@@ -410,7 +410,6 @@ const formDOM = (() => {
       formItem4.insertBefore(generateTagInput(""), addTagInput);
     });
     for (const tag of defaultTags) {
-      console.log(tag);
       formItem4.appendChild(generateTagInput(tag));
     }
     formItem4.appendChild(addTagInput);
