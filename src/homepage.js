@@ -111,7 +111,13 @@ const homepage = (() => {
     removeSubjectButton.textContent = "Remove Subject";
 
     removeSubjectButton.addEventListener("click", () => {
-      console.log("remove subject button event fired");
+      const container = document.querySelector("#content");
+      container.appendChild(
+        formDOM.generateConfirmSubjectDeleteForm(
+          document.querySelector(".subject-selected").textContent
+        )
+      );
+      container.appendChild(formDOM.generateOverlay());
     });
 
     nav.appendChild(removeSubjectButton);
