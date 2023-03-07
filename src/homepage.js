@@ -101,7 +101,7 @@ const homepage = (() => {
 
     addSubjectButton.addEventListener("click", () => {
       const container = document.querySelector("#content");
-      container.appendChild(formDOM.generateSubjectForm());
+      container.appendChild(formDOM.generateSubjectForm(""));
       container.appendChild(formDOM.generateOverlay());
     });
 
@@ -112,7 +112,7 @@ const homepage = (() => {
 
     addNotecardButton.addEventListener("click", () => {
       const container = document.querySelector("#content");
-      container.appendChild(formDOM.generateNotecardForm());
+      container.appendChild(formDOM.generateNotecardForm("", "", []));
       container.appendChild(formDOM.generateOverlay());
     });
 
