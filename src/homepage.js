@@ -1,4 +1,4 @@
-import { notecardStorage, tagStorage } from "./notecards";
+import { notecardStorage, subjectStorage, tagStorage } from "./notecards";
 import { formDOM } from "./form";
 import { storer } from "./storage";
 
@@ -106,6 +106,35 @@ const homepage = (() => {
     });
 
     nav.appendChild(addSubjectButton);
+
+    const removeSubjectButton = document.createElement("button");
+    removeSubjectButton.textContent = "Remove Subject";
+
+    removeSubjectButton.addEventListener("click", () => {
+      console.log("remove subject button event fired");
+    });
+
+    nav.appendChild(removeSubjectButton);
+
+    const editSubjectButton = document.createElement("button");
+    editSubjectButton.textContent = "Edit Subject";
+
+    editSubjectButton.addEventListener("click", () => {
+      const currentSubject = document.querySelector(".subject-selected");
+      if (currentSubject === null) return;
+      const container = document.querySelector("#content");
+      container.appendChild(
+        formDOM.generateSubjectForm(currentSubject.textContent)
+      );
+      container.appendChild(formDOM.generateOverlay());
+      currentSubject.remove();
+      subjectStorage.removeSubject(currentSubject.textContent);
+      // eslint-disable-next-line no-use-before-define
+      refreshSidebar(subjectStorage.getSubjects());
+      storer.store();
+    });
+
+    nav.appendChild(editSubjectButton);
 
     const addNotecardButton = document.createElement("button");
     addNotecardButton.textContent = "Add Notecard";
