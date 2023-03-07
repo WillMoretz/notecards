@@ -216,7 +216,7 @@ const formDOM = (() => {
     return closeButton;
   }
 
-  function generateTagInput() {
+  function generateTagInput(defaultTag) {
     const container = document.createElement("div");
     container.classList.add("tag-input-container");
 
@@ -225,6 +225,7 @@ const formDOM = (() => {
     tagInput.setAttribute("type", "text");
     tagInput.setAttribute("id", "notecard-input-tag");
     tagInput.setAttribute("name", "notecard-input-tag");
+    tagInput.setAttribute("value", defaultTag);
     tagInput.setAttribute("list", "tag-list");
     container.appendChild(tagInput);
 
@@ -256,7 +257,7 @@ const formDOM = (() => {
     return submitButton;
   }
 
-  function generateNotecardForm() {
+  function generateNotecardForm(defaultTitle, defaultDescription, defaultTags) {
     const form = document.createElement("form");
     form.classList.add("pop-up");
     form.setAttribute("id", formValidator.notecardFormID);
@@ -281,6 +282,7 @@ const formDOM = (() => {
     titleInput.setAttribute("type", "text");
     titleInput.setAttribute("id", "title");
     titleInput.setAttribute("name", "title");
+    titleInput.setAttribute("value", defaultTitle);
     titleInput.addEventListener("focusout", () => {
       if (formValidator.validateNotecardTitle()) {
         titleInput.classList.add("input-valid");
@@ -328,6 +330,7 @@ const formDOM = (() => {
     const descriptionInput = document.createElement("textarea");
     descriptionInput.setAttribute("id", "description");
     descriptionInput.setAttribute("name", "description");
+    descriptionInput.textContent = defaultDescription;
     descriptionInput.addEventListener("focusout", () => {
       if (formValidator.validateNotecardDescription()) {
         descriptionInput.classList.add("input-valid");
@@ -370,9 +373,16 @@ const formDOM = (() => {
     const notecardSubjectInput = document.createElement("select");
     notecardSubjectInput.setAttribute("id", "notecard-input-subject");
     notecardSubjectInput.setAttribute("name", "notecard-input-subject");
+    const defaultSubject = document.querySelector(".subject-selected");
+    let defaultSubjectValue = "none";
+    if (defaultSubject !== null)
+      defaultSubjectValue = defaultSubject.textContent;
     subjectStorage.getSubjects().forEach((subject) => {
       const option = document.createElement("option");
       option.setAttribute("value", subject);
+      if (subject === defaultSubjectValue) {
+        option.setAttribute("selected", "selected");
+      }
       option.textContent = subject;
       notecardSubjectInput.appendChild(option);
     });
@@ -397,8 +407,12 @@ const formDOM = (() => {
     addTagInput.textContent = "+";
     addTagInput.addEventListener("click", () => {
       if (document.querySelectorAll(".tag-input-container").length > 5) return;
-      formItem4.insertBefore(generateTagInput(), addTagInput);
+      formItem4.insertBefore(generateTagInput(""), addTagInput);
     });
+    for (const tag of defaultTags) {
+      console.log(tag);
+      formItem4.appendChild(generateTagInput(tag));
+    }
     formItem4.appendChild(addTagInput);
 
     const tagInputErrorMessage = document.createElement("div");
@@ -420,7 +434,7 @@ const formDOM = (() => {
     return form;
   }
 
-  function generateSubjectForm() {
+  function generateSubjectForm(defaultValue) {
     const form = document.createElement("form");
     form.classList.add("pop-up");
     form.setAttribute("id", formValidator.subjectFormID);
@@ -445,6 +459,7 @@ const formDOM = (() => {
     subjectInput.setAttribute("type", "text");
     subjectInput.setAttribute("id", "subject");
     subjectInput.setAttribute("name", "subject");
+    subjectInput.setAttribute("value", defaultValue);
     subjectInput.addEventListener("focusout", () => {
       if (
         !formValidator.validateSubjectLength() &&
