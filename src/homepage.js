@@ -201,6 +201,9 @@ const homepage = (() => {
         e.stopPropagation();
         notecardStorage.removeNotecard(card);
         notecardContainer.remove();
+        tagStorage.removeUnusedTags();
+        // eslint-disable-next-line no-use-before-define
+        refreshTags(tagStorage.getTags());
         storer.store();
       });
       notecardOptions.appendChild(removeNotecardButton);
