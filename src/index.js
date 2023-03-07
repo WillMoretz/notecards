@@ -70,7 +70,6 @@ const pageManager = (() => {
   }
 
   function initHomepage() {
-    console.log(localStorage);
     // retrieve any saved notecards from local storage
     const storedValues = restorer.restore();
     // add retrieved content
@@ -90,8 +89,8 @@ const pageManager = (() => {
     if (localStorage.getItem("firstVisit") === null) {
       addDummyContent();
       localStorage.setItem("firstVisit", false);
+      storer.store();
     }
-    // addDummyContent();
 
     resetPage();
     PAGECONTAINER.appendChild(
