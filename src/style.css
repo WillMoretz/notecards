@@ -140,6 +140,28 @@ button[type="submit"]:hover {
   color: var(--highlight, pink);
 }
 
+.confirm-delete-warning-container {
+  width: 400px;
+}
+
+.confirm-delete-button,
+.cancel-delete-button {
+  padding: 12px 32px 12px 32px;
+  margin: 8px;
+  border: none;
+  border-radius: 12px;
+  background-color: var(--sidebar-background, darkblue);
+  color: var(--light, white);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.confirm-delete-button:hover,
+.cancel-delete-button:hover {
+  color: var(--highlight, pink);
+  box-shadow: 2px 2px rgba(0, 0, 0, 0.12);
+}
+
 .homepage {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -182,6 +204,7 @@ button[type="submit"]:hover {
 
 .nav {
   display: flex;
+  flex-wrap: wrap;
   gap: 4px;
 }
 
