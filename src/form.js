@@ -257,6 +257,45 @@ const formDOM = (() => {
     return submitButton;
   }
 
+  function generateConfirmSubjectDeleteForm(subject) {
+    const form = document.createElement("div");
+    form.classList.add("pop-up");
+
+    const formRow1 = document.createElement("div");
+    formRow1.classList.add("form-row");
+    formRow1.classList.add("confirm-delete-warning-container");
+
+    const confirmDeleteWarning = document.createElement("div");
+    confirmDeleteWarning.textContent = `  Are you sure you want to delete the subject "${subject}"? All notecards contained in the subject "${subject}" will not be deleted. The notecards in the subject "${subject}" will still be present in the all subject`;
+
+    formRow1.appendChild(confirmDeleteWarning);
+    form.appendChild(formRow1);
+
+    const formRow2 = document.createElement("div");
+    formRow2.classList.add("form-row");
+
+    const cancelDeleteButton = document.createElement("button");
+    cancelDeleteButton.classList.add("cancel-delete-button");
+    cancelDeleteButton.textContent = "Cancel";
+    cancelDeleteButton.addEventListener("click", () => {
+      console.log("subject deletion canceled!");
+    });
+    formRow2.appendChild(cancelDeleteButton);
+
+    const confirmDeleteButton = document.createElement("button");
+    confirmDeleteButton.classList.add("confirm-delete-button");
+    confirmDeleteButton.textContent = "Confirm";
+    confirmDeleteButton.addEventListener("click", () => {
+      console.log("subject deletion confirmed!");
+    });
+    formRow2.appendChild(confirmDeleteButton);
+    form.appendChild(formRow2);
+
+    form.appendChild(generateCloseButton(form));
+
+    return form;
+  }
+
   function generateNotecardForm(defaultTitle, defaultDescription, defaultTags) {
     const form = document.createElement("form");
     form.classList.add("pop-up");
@@ -512,6 +551,7 @@ const formDOM = (() => {
     generateSubjectForm,
     generateOverlay,
     removeForm,
+    generateConfirmSubjectDeleteForm,
   };
 })();
 
