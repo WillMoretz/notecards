@@ -89,7 +89,21 @@ const tagStorage = (() => {
     return tags;
   }
 
-  return { addTag, removeTag, getTags };
+  function removeUnusedTags() {
+    const unusedTags = [];
+    for (const tag of getTags()) unusedTags.push(tag);
+    for (const card of notecardStorage.getAllNotecards()) {
+      for (const tag of card.tags) {
+        if (unusedTags.includes(tag)) {
+          const tagIndex = unusedTags.indexOf(tag);
+          unusedTags.splice(tagIndex, 1);
+        }
+      }
+    }
+    for (const tag of unusedTags) removeTag(tag);
+  }
+
+  return { addTag, removeTag, getTags, removeUnusedTags };
 })();
 
 export { notecardStorage, tagStorage, subjectStorage, notecard };
