@@ -173,7 +173,17 @@ const homepage = (() => {
       editNotecardButton.textContent = "Edit";
       editNotecardButton.addEventListener("click", (e) => {
         e.stopPropagation();
-        console.log("hello");
+        const container = document.querySelector("#content");
+        container.appendChild(
+          formDOM.generateNotecardForm(card.title, card.content, card.tags)
+        );
+        container.appendChild(formDOM.generateOverlay());
+        notecardStorage.removeNotecard(card);
+        notecardContainer.remove();
+        tagStorage.removeUnusedTags();
+        // eslint-disable-next-line no-use-before-define
+        refreshTags(tagStorage.getTags());
+        storer.store();
       });
       notecardOptions.appendChild(editNotecardButton);
 
