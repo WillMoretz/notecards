@@ -118,10 +118,11 @@ const homepage = (() => {
 
     const editSubjectButton = document.createElement("button");
     editSubjectButton.textContent = "Edit Subject";
+    editSubjectButton.classList.add("edit-subject-button");
+    editSubjectButton.style.display = "none";
 
     editSubjectButton.addEventListener("click", () => {
       const currentSubject = document.querySelector(".subject-selected");
-      if (currentSubject === null) return;
       const container = document.querySelector("#content");
       container.appendChild(
         formDOM.generateSubjectForm(currentSubject.textContent)
@@ -338,10 +339,12 @@ const homepage = (() => {
           button.classList.remove("subject-selected");
           refreshBody();
           refreshTags("none");
+          document.querySelector(".edit-subject-button").style.display = "none";
           return;
         }
 
         refreshTags(filterTagsBySubject(subject));
+        document.querySelector(".edit-subject-button").style.display = "block";
 
         for (const sub of sidebar.children) {
           sub.classList.remove("subject-selected");
