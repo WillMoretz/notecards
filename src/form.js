@@ -266,7 +266,7 @@ const formDOM = (() => {
     formRow1.classList.add("confirm-delete-warning-container");
 
     const confirmDeleteWarning = document.createElement("div");
-    confirmDeleteWarning.textContent = `  Are you sure you want to delete the subject "${subject}"? All notecards contained in the subject "${subject}" will not be deleted. The notecards in the subject "${subject}" will still be present in the all subject`;
+    confirmDeleteWarning.textContent = `Are you sure you want to delete the subject "${subject}"? All notecards contained in the subject "${subject}" will not be deleted. The notecards in the subject "${subject}" will still be present in the all subject`;
 
     formRow1.appendChild(confirmDeleteWarning);
     form.appendChild(formRow1);
@@ -278,7 +278,7 @@ const formDOM = (() => {
     cancelDeleteButton.classList.add("cancel-delete-button");
     cancelDeleteButton.textContent = "Cancel";
     cancelDeleteButton.addEventListener("click", () => {
-      console.log("subject deletion canceled!");
+      removeForm(form);
     });
     formRow2.appendChild(cancelDeleteButton);
 
