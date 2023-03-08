@@ -19,6 +19,7 @@ const pageManager = (() => {
 
   function addDummyContent() {
     // Dummy Content
+    subjectStorage.addSubject("everything");
     subjectStorage.addSubject("english");
     subjectStorage.addSubject("math");
     subjectStorage.addSubject("science");

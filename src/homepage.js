@@ -26,6 +26,8 @@ const notecardFilterer = (() => {
 
     if (selectedSubject === "none") {
       notecards = notecards.concat(notecardStorage.getAllNotecards());
+    } else if (selectedSubject === "everything") {
+      notecards = notecards.concat(notecardStorage.getAllNotecards());
     } else {
       notecards = notecards.concat(
         notecardStorage.getNotecardBySubject(selectedSubject)
@@ -109,6 +111,8 @@ const homepage = (() => {
 
     const removeSubjectButton = document.createElement("button");
     removeSubjectButton.textContent = "Remove Subject";
+    removeSubjectButton.classList.add("remove-subject-button");
+    removeSubjectButton.style.display = "none";
 
     removeSubjectButton.addEventListener("click", () => {
       const container = document.querySelector("#content");
@@ -339,18 +343,34 @@ const homepage = (() => {
     for (const subject of subjectList) {
       const button = document.createElement("button");
       button.textContent = subject;
+      if (subject === "everything") button.classList.add("subject-everything");
 
       button.addEventListener("click", () => {
         if (button.classList.contains("subject-selected")) {
           button.classList.remove("subject-selected");
+          document
+            .querySelector(".subject-everything")
+            .classList.add("subject-selected");
           refreshBody();
-          refreshTags("none");
+          refreshTags(tagStorage.getTags());
           document.querySelector(".edit-subject-button").style.display = "none";
+          document.querySelector(".remove-subject-button").style.display =
+            "none";
           return;
         }
 
-        refreshTags(filterTagsBySubject(subject));
-        document.querySelector(".edit-subject-button").style.display = "block";
+        if (subject === "everything") {
+          refreshTags(tagStorage.getTags());
+          document.querySelector(".edit-subject-button").style.display = "none";
+          document.querySelector(".remove-subject-button").style.display =
+            "none";
+        } else {
+          refreshTags(filterTagsBySubject(subject));
+          document.querySelector(".edit-subject-button").style.display =
+            "block";
+          document.querySelector(".remove-subject-button").style.display =
+            "block";
+        }
 
         for (const sub of sidebar.children) {
           sub.classList.remove("subject-selected");

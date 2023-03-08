@@ -417,13 +417,15 @@ const formDOM = (() => {
     if (defaultSubject !== null)
       defaultSubjectValue = defaultSubject.textContent;
     subjectStorage.getSubjects().forEach((subject) => {
-      const option = document.createElement("option");
-      option.setAttribute("value", subject);
-      if (subject === defaultSubjectValue) {
-        option.setAttribute("selected", "selected");
+      if (subject !== "everything") {
+        const option = document.createElement("option");
+        option.setAttribute("value", subject);
+        if (subject === defaultSubjectValue) {
+          option.setAttribute("selected", "selected");
+        }
+        option.textContent = subject;
+        notecardSubjectInput.appendChild(option);
       }
-      option.textContent = subject;
-      notecardSubjectInput.appendChild(option);
     });
     formItem3.appendChild(notecardSubjectInput);
     formRow3.appendChild(formItem3);
