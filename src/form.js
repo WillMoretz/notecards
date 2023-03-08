@@ -4,6 +4,8 @@ import {
   notecardStorage,
   notecard,
 } from "./notecards";
+import homepage from "./homepage";
+import { storer } from "./storage";
 
 const formValidator = (() => {
   const subjectFormID = "subject-form";
@@ -266,7 +268,7 @@ const formDOM = (() => {
     formRow1.classList.add("confirm-delete-warning-container");
 
     const confirmDeleteWarning = document.createElement("div");
-    confirmDeleteWarning.textContent = `Are you sure you want to delete the subject "${subject}"? All notecards contained in the subject "${subject}" will not be deleted. The notecards in the subject "${subject}" will still be present in the all subject`;
+    confirmDeleteWarning.textContent = `Are you sure you want to delete the subject "${subject}"? All notecards contained in the subject "${subject}" will not be deleted. The notecards in the subject "${subject}" will still be present in the everything subject`;
 
     formRow1.appendChild(confirmDeleteWarning);
     form.appendChild(formRow1);
@@ -286,7 +288,14 @@ const formDOM = (() => {
     confirmDeleteButton.classList.add("confirm-delete-button");
     confirmDeleteButton.textContent = "Confirm";
     confirmDeleteButton.addEventListener("click", () => {
-      console.log("subject deletion confirmed!");
+      for (const card of notecardStorage.getNotecardBySubject(subject)) {
+        card.subject = "everything";
+      }
+      subjectStorage.removeSubject(subject);
+      homepage.refreshSidebar(subjectStorage.getSubjects());
+      homepage.refreshBody();
+      storer.store();
+      removeForm(form);
     });
     formRow2.appendChild(confirmDeleteButton);
     form.appendChild(formRow2);
